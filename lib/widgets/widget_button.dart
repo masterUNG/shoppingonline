@@ -19,7 +19,8 @@ class WidgetButton extends StatelessWidget {
       onPressed: onPressed,
       text: text,
       color: AppConstant.primaryColor,
-      shape: GFButtonShape.pills,padding: EdgeInsets.symmetric(horizontal: 32),
+      shape: GFButtonShape.pills,
+      padding: EdgeInsets.symmetric(horizontal: 32),textStyle: AppConstant.h3Style(fontWeight: FontWeight.w600),
     );
   }
 }
