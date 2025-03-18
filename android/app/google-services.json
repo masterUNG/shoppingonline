@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1035917486333",
+    "project_id": "shoppingonline-57e3c",
+    "storage_bucket": "shoppingonline-57e3c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035917486333:android:caa2ca036bc45fd4617694",
+        "android_client_info": {
+          "package_name": "com.masterung.shoppingonline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRTkn37fvWHEQQaIrUiyIb0OqA02PhopE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
