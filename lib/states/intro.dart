@@ -57,7 +57,9 @@ class _IntroState extends State<Intro> {
         body: SafeArea(
       child: IntroductionScreen(
         pages: pages,
-        onDone: () {},
+        onDone: () {
+          Get.offAndToNamed('/signinsignup');
+        },
         done: WidgetText(text: 'ลงชื่อใช้งาน'),
         showNextButton: true,
         next: WidgetText(text: 'ต่อไป'),
