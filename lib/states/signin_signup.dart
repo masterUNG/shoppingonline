@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
@@ -18,18 +19,23 @@ class SignInSignUp extends StatelessWidget {
           SizedBox(height: 16),
           WidgetText(
               text: AppConstant.slogan1, textStyle: AppConstant.h2Style()),
-              
           WidgetText(
               text: AppConstant.slogan2, textStyle: AppConstant.h2Style()),
-              SizedBox(height: 16),
+          SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: WidgetText(text: AppConstant.subSlogan),
           ),
           Spacer(),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            WidgetButton(text: 'ลงชื่อใช้งาน', onPressed: () {}),
-            WidgetButton(text: 'สมัครใช้งาน', onPressed: () {}),
+            WidgetButton(
+                text: 'ลงชื่อใช้งาน',
+                onPressed: () {
+                  Get.toNamed('/signIn');
+                }),
+            WidgetButton(text: 'สมัครใช้งาน', onPressed: () {
+              Get.toNamed('/signUp');
+            }, type: GFButtonType.outline),
           ]),
           SizedBox(height: 16),
         ],

@@ -13,11 +13,16 @@ class AppConstant {
       fontSize: 36, fontWeight: FontWeight.bold, fontFamily: 'Kodchasan');
   static TextStyle h2Style() => TextStyle(
       fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'Kodchasan');
-  static TextStyle h3Style({FontWeight? fontWeight}) => TextStyle(
-      fontSize: 15, fontWeight: fontWeight ?? FontWeight.normal, fontFamily: 'Kodchasan');
+  static TextStyle h3Style({FontWeight? fontWeight, Color? color}) => TextStyle(
+      color: color,
+      fontSize: 15,
+      fontWeight: fontWeight ?? FontWeight.normal,
+      fontFamily: 'Kodchasan');
 
   static String slogan1 = 'ช้อปสะดวก ขายสบาย';
   static String slogan2 = 'มั่นใจทุกดีล';
   static String subSlogan =
       'แอปซื้อขายออนไลน์ที่ใช้งานง่าย รวดเร็ว และปลอดภัยที่สุด ให้คุณเลือกซื้อสินค้าหลากหลาย หรือเปิดร้านขายของได้ในไม่กี่คลิก พร้อมระบบชำระเงินที่เชื่อถือได้และการรับประกันความพึงพอใจ';
+
+  static String signInDescrip = 'สมัครสมาชิกวันนี้! ช้อปง่าย ขายสะดวก รับดีลสุดพิเศษก่อนใคร มั่นใจทุกการซื้อขาย ปลอดภัย 100% โหลดเลย!';
 }
