@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:shoppingonline/bottom_sheet/term_condition_bottom_sheet.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/widgets/widget_back_button.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
@@ -50,14 +51,19 @@ class SignUpPage extends StatelessWidget {
                           SizedBox(height: 16),
                           CheckboxListTile(
                             value: false,
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              Get.bottomSheet(TermConditionBottomSheet(),
+                                  isDismissible: false,
+                                  isScrollControlled: true);
+                            },
                             title: WidgetText(text: 'ยอมรับเงื่อนไข'),
                             controlAffinity: ListTileControlAffinity.leading,
                           ),
                           SizedBox(height: 16),
-                          WidgetButton(text: 'สมัครสมาชิก', onPressed: () {
-                            
-                          },),
+                          WidgetButton(
+                            text: 'สมัครสมาชิก',
+                            onPressed: () {},
+                          ),
                           SizedBox(height: 16),
                         ],
                       ),
