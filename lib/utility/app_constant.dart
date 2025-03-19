@@ -12,7 +12,9 @@ class AppConstant {
   static TextStyle h1Style() => TextStyle(
       fontSize: 36, fontWeight: FontWeight.bold, fontFamily: 'Kodchasan');
   static TextStyle h2Style({double? fontSize}) => TextStyle(
-      fontSize: fontSize ?? 24, fontWeight: FontWeight.bold, fontFamily: 'Kodchasan');
+      fontSize: fontSize ?? 24,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Kodchasan');
   static TextStyle h3Style({FontWeight? fontWeight, Color? color}) => TextStyle(
       color: color,
       fontSize: 15,
@@ -24,8 +26,11 @@ class AppConstant {
   static String subSlogan =
       'แอปซื้อขายออนไลน์ที่ใช้งานง่าย รวดเร็ว และปลอดภัยที่สุด ให้คุณเลือกซื้อสินค้าหลากหลาย หรือเปิดร้านขายของได้ในไม่กี่คลิก พร้อมระบบชำระเงินที่เชื่อถือได้และการรับประกันความพึงพอใจ';
 
-  static String signInDescrip =
+  static String signUpDescrip =
       'สมัครสมาชิกวันนี้! ช้อปง่าย ขายสะดวก รับดีลสุดพิเศษก่อนใคร มั่นใจทุกการซื้อขาย ปลอดภัย 100% โหลดเลย!';
+
+  static String signInDescrip =
+      'เข้าสู่ระบบเพื่อประสบการณ์ที่ดีกว่า! ช้อปง่าย ขายสะดวก รับดีลสุดพิเศษก่อนใคร มั่นใจทุกการซื้อขาย ปลอดภัย 100% โหลดเลย!';
 
   static String termCondition = """ <!DOCTYPE html>
 <html lang="th">
