@@ -26,65 +26,67 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: SizedBox(
-              width: Get.width,
-              height: Get.height,
-              child: Stack(children: [
-                elementTop(),
-                Positioned(
-                  top: 72,
-                  child: SizedBox(
-                    width: Get.width,
-                    height: Get.height - 72 - 80,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: 300,
-                            child: Form(
-                                key: keyForm,
-                                child: ListView(children: [
-                                  SizedBox(height: 16),
-                                  WidgetText(text: AppConstant.signInDescrip),
-                                  SizedBox(height: 16),
-                                  WidgetForm(
-                                    controller: emailController,
-                                    validator: (p0) {
-                                      if (p0?.isEmpty ?? true) {
-                                        return 'โปรดกรอก อีเมล์ ด้วย คะ';
-                                      } else if (!(p0!.isEmail)) {
-                                        return 'อีเมล์ ผิด abc@abc.com';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    label: 'อีเมล์ :',
-                                    keyboardType: TextInputType.emailAddress,
-                                  ),
-                                  SizedBox(height: 16),
-                                  WidgetForm(
-                                    controller: passwordController,
-                                    validator: (p0) {
-                                      if (p0?.isEmpty ?? true) {
-                                        return 'โปรดกรอก รหัสผ่าน ด้วย คะ';
-                                      } else if (p0!.length < 6) {
-                                        return 'รหัสผ่าน ต้องมี 6 ตัวอักษร ขึ้นไป';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    label: 'รหัสผ่าน :',
-                                  ),
-                                  SizedBox(height: 16),
-                                  WidgetButton(
-                                      text: 'ลงชื่อเข้าใช้งาน',
-                                      onPressed: () {})
-                                ]))),
-                      ],
+          child: GestureDetector(onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: SizedBox(
+                width: Get.width,
+                height: Get.height,
+                child: Stack(children: [
+                  elementTop(),
+                  Positioned(
+                    top: 72,
+                    child: SizedBox(
+                      width: Get.width,
+                      height: Get.height - 72 - 80,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: Get.width * 0.8,
+                              child: Form(
+                                  key: keyForm,
+                                  child: ListView(children: [
+                                    SizedBox(height: 16),
+                                    WidgetText(text: AppConstant.signInDescrip),
+                                    SizedBox(height: 16),
+                                    WidgetForm(
+                                      controller: emailController,
+                                      validator: (p0) {
+                                        if (p0?.isEmpty ?? true) {
+                                          return 'โปรดกรอก อีเมล์ ด้วย คะ';
+                                        } else if (!(p0!.isEmail)) {
+                                          return 'อีเมล์ ผิด abc@abc.com';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      hintText: 'อีเมล์ :',
+                                      keyboardType: TextInputType.emailAddress,
+                                    ),
+                                    SizedBox(height: 16),
+                                    WidgetForm(
+                                      controller: passwordController,
+                                      validator: (p0) {
+                                        if (p0?.isEmpty ?? true) {
+                                          return 'โปรดกรอก รหัสผ่าน ด้วย คะ';
+                                        } else if (p0!.length < 6) {
+                                          return 'รหัสผ่าน ต้องมี 6 ตัวอักษร ขึ้นไป';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      hintText: 'รหัสผ่าน :',
+                                    ),
+                                    SizedBox(height: 16),
+                                    WidgetButton(
+                                        text: 'ลงชื่อเข้าใช้งาน',
+                                        onPressed: () {})
+                                  ]))),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ]))),
+                ])),
+          )),
     );
   }
 
