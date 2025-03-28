@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shoppingonline/firebase_options.dart';
+import 'package:shoppingonline/state_web/signin_web.dart';
 import 'package:shoppingonline/states/intro.dart';
 import 'package:shoppingonline/states/main_home.dart';
 import 'package:shoppingonline/states/signin_page.dart';
@@ -13,6 +14,7 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: '/intro', page: () => Intro()),
   GetPage(name: '/signinsignup', page: () => SignInSignUp()),
   GetPage(name: '/signIn', page: () => SignInPage()),
+  GetPage(name: '/signInWeb', page: () => SignInWebPage()),
   GetPage(name: '/signUp', page: () => SignUpPage()),
   GetPage(name: '/mainHome', page: () => MainHome()),
 ];
@@ -23,11 +25,23 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .whenComplete(
-    () {},
-  );
+      .whenComplete(() {
 
-  runApp(const MyApp());
+        if (GetPlatform.isWeb) {
+          //for Web
+          initialRoute = '/signInWeb';
+          runApp(const MyApp());
+        } else {
+          //for Mobile
+          initialRoute = '/intro';
+          runApp(const MyApp());
+        }
+
+
+
+      });
+
+  
 }
 
 class MyApp extends StatelessWidget {

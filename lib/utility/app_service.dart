@@ -12,7 +12,21 @@ class AppService {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((onValue) {
-          Get.offAllNamed('/mainHome');
+
+          if (GetPlatform.isWeb) {
+            //for Web
+            if (email == 'admin${AppConstant.keyApp}') {
+              
+            } else {
+              primarySnackBar(title: 'ลงชื่อเข้าใช้งาน ไม่ถูกต้อง', massage: 'ต้องใช้ Account สำหรับ ร้านค้า เท่านั้น');
+            }
+          } else {
+            //for Mobile
+             Get.offAllNamed('/mainHome');
+          }
+
+
+         
         })
         .catchError((onError) {
       primarySnackBar(
