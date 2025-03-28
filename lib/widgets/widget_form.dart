@@ -12,6 +12,8 @@ class WidgetForm extends StatelessWidget {
     this.keyboardType,
     this.controller,
     this.validator,
+    this.obscureText,
+    this.suffixIcon,
   }) : super(key: key);
 
   final String? label;
@@ -19,10 +21,13 @@ class WidgetForm extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final bool? obscureText;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        obscureText: obscureText ?? false,
         controller: controller,
         validator: validator,
         keyboardType: keyboardType,
@@ -33,6 +38,8 @@ class WidgetForm extends StatelessWidget {
             labelText: label,
             labelStyle: AppConstant.h3Style(),
             errorStyle: AppConstant.h3Style(color: GFColors.DANGER),
-            hintText: hintText, hintStyle: AppConstant.h3Style()));
+            hintText: hintText,
+            hintStyle: AppConstant.h3Style(),
+            suffixIcon: suffixIcon));
   }
 }

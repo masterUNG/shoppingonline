@@ -5,4 +5,6 @@ class AppController extends GetxController {
   RxBool acceptTermAndCondition = false.obs;
 
   RxBool displayErrorAccept = false.obs;
+
+  RxBool redEye = true.obs;
 }

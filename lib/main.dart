@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shoppingonline/firebase_options.dart';
 import 'package:shoppingonline/states/intro.dart';
+import 'package:shoppingonline/states/main_home.dart';
 import 'package:shoppingonline/states/signin_page.dart';
 import 'package:shoppingonline/states/signin_signup.dart';
 import 'package:shoppingonline/states/signup_page.dart';
@@ -12,7 +13,8 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: '/intro', page: () => Intro()),
   GetPage(name: '/signinsignup', page: () => SignInSignUp()),
   GetPage(name: '/signIn', page: () => SignInPage()),
-  GetPage(name: '/signUp', page: () => SignUpPage())
+  GetPage(name: '/signUp', page: () => SignUpPage()),
+  GetPage(name: '/mainHome', page: () => MainHome()),
 ];
 
 String initialRoute = '/intro';
