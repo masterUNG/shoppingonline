@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:shoppingonline/state_web/main_home_web.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 
 class AppService {
@@ -15,7 +16,9 @@ class AppService {
 
           if (GetPlatform.isWeb) {
             //for Web
-            if (email == 'admin${AppConstant.keyApp}') {
+            if (email == 'admin${AppConstant.keyApp}@abc.com') {
+
+              Get.offAll(MainHomeWeb());
               
             } else {
               primarySnackBar(title: 'ลงชื่อเข้าใช้งาน ไม่ถูกต้อง', massage: 'ต้องใช้ Account สำหรับ ร้านค้า เท่านั้น');
