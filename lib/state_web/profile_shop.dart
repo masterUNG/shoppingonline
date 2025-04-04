@@ -5,6 +5,7 @@ class ProfileShop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text('Profile shop'),);
+    return SizedBox(width: 800,
+      child: Scaffold(body: Text('Profile shop'),));
   }
 }

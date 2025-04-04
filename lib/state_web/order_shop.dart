@@ -5,6 +5,7 @@ class OrderShop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text('Order'),);
+    return SizedBox(width: 800,
+      child: Scaffold(body: Text('Order'),));
   }
 }
