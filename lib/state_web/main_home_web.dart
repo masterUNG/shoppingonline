@@ -41,7 +41,7 @@ class _MainHomeWebState extends State<MainHomeWeb> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 800,height: 300,
+              width: 800,height: Get.height,
               color: Colors.grey,
               child: Row(
                 children: [

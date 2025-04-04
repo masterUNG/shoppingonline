@@ -6,15 +6,17 @@ import 'package:shoppingonline/utility/app_constant.dart';
 
 class WidgetIconButton extends StatelessWidget {
   const WidgetIconButton({
-    super.key,
+    Key? key,
     required this.icon,
     required this.onPressed,
     this.type,
-  });
+    this.size,
+  }) : super(key: key);
 
   final IconData icon;
   final Function() onPressed;
   final GFButtonType? type;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class WidgetIconButton extends StatelessWidget {
       onPressed: onPressed,
       color: AppConstant.primaryColor,
       type: type ?? GFButtonType.transparent,
-      shape: GFIconButtonShape.circle,
+      shape: GFIconButtonShape.circle,size: size ?? GFSize.MEDIUM,
     );
   }
 }

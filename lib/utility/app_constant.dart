@@ -21,6 +21,11 @@ class AppConstant {
       fontWeight: fontWeight ?? FontWeight.normal,
       fontFamily: 'Kodchasan');
 
+  static BoxDecoration borderRadius() {
+    return BoxDecoration(
+        border: Border.all(), borderRadius: BorderRadius.circular(10));
+  }
+
   static String slogan1 = 'ช้อปสะดวก ขายสบาย';
   static String slogan2 = 'มั่นใจทุกดีล';
   static String subSlogan =
