@@ -15,8 +15,8 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: '/intro', page: () => Intro()),
   GetPage(name: '/signinsignup', page: () => SignInSignUp()),
   GetPage(name: '/signIn', page: () => SignInPage()),
-  GetPage(name: '/signInWeb', page: () => SignInWebPage()),
-  // GetPage(name: '/signInWeb', page: () => MainHomeWeb()),
+  // GetPage(name: '/signInWeb', page: () => SignInWebPage()),
+  GetPage(name: '/signInWeb', page: () => MainHomeWeb()),
   GetPage(name: '/signUp', page: () => SignUpPage()),
   GetPage(name: '/mainHome', page: () => MainHome()),
 ];
