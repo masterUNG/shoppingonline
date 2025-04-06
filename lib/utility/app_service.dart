@@ -11,7 +11,7 @@ import 'package:shoppingonline/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  Future<void> findUrlImageByUploadWeb() async {
+  Future<String?> findUrlImageByUploadWeb() async {
     String? urlImage;
 
     var result = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -33,6 +33,8 @@ class AppService {
         },
       );
     }
+
+    return urlImage;
   }
 
   Future<void> processCheckAuthen({

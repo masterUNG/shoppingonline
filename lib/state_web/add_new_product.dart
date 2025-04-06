@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
+import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
 import 'package:shoppingonline/widgets/widget_form.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
@@ -37,7 +38,11 @@ class AddNewProduct extends StatelessWidget {
                             child: Center(child: Text('รูปภาพสินค้า'))),
                         WidgetIconButton(
                           icon: Icons.photo_outlined,
-                          onPressed: () {},
+                          onPressed: ()async {
+
+                              String? urlImage = await AppService().findUrlImageByUploadWeb();
+                              print('##6april ==> $urlImage');
+                          },
                           size: GFSize.LARGE,
                         )
                       ],
