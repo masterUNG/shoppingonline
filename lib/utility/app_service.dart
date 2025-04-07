@@ -1,15 +1,54 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shoppingonline/models/category_model.dart';
+import 'package:shoppingonline/models/product_model.dart';
 import 'package:shoppingonline/state_web/main_home_web.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  Future<List<ProductModel>> readAllProduct() async {
+
+    var productModels = <ProductModel>[];
+
+    var result = await FirebaseFirestore.instance.collection('product${AppConstant.keyApp}').orderBy('timestamp', descending: true).get();
+    for (var element in result.docs) {
+      
+      ProductModel productModel = ProductModel.fromMap(element.data());
+      Map<String,dynamic> map = productModel.toMap();
+
+      productModels.add(ProductModel.fromMap(map));
+    }
+
+    return productModels;
+
+  }
+
+  Future<List<CategoryModel>> readAllCategory() async {
+
+    var categoryModels = <CategoryModel>[];
+
+    var result = await FirebaseFirestore.instance.collection('category').get();
+    for (var element in result.docs) {
+
+      CategoryModel categoryModel = CategoryModel.fromMap(element.data());
+      Map<String,dynamic> map = categoryModel.toMap();
+
+      map['docId'] = element.id;
+      categoryModels.add(CategoryModel.fromMap(map));
+      
+    }
+
+
+    return categoryModels;
+  }
 
   Future<String?> findUrlImageByUploadWeb() async {
     String? urlImage;

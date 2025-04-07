@@ -1,7 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shoppingonline/models/category_model.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 
 import 'package:shoppingonline/widgets/widget_image_asset.dart';
@@ -49,6 +54,32 @@ class _IntroState extends State<Intro> {
             child: WidgetText(text: subTitles[i]),
           )));
     }
+
+    //Create Data Categgory
+    // createCategory();
+  }
+
+  Future<void> createCategory() async {
+    var categorys = <String>[
+      "อาหาร",
+      "เครื่องดื่ม",
+      "ของใช้ในบ้าน",
+      "สินค้าไลฟ์สไตล์",
+      "ความงามและดูแลตัวเอง",
+      "แฟชั่น",
+      "สินค้าแม่และเด็ก",
+      "สัตว์เลี้ยง"
+    ];
+
+    for (var element in categorys) {
+      
+      CategoryModel model = CategoryModel(nameCategory: element);
+
+      await FirebaseFirestore.instance.collection('category').doc().set(model.toMap());
+    }
+
+
+
   }
 
   @override
