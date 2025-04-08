@@ -17,6 +17,8 @@ class AppController extends GetxController {
 
   RxList<String> urlImages = <String>[].obs;
 
+  
+
 
 
 

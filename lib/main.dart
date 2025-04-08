@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,7 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: '/intro', page: () => Intro()),
   GetPage(name: '/signinsignup', page: () => SignInSignUp()),
   GetPage(name: '/signIn', page: () => SignInPage()),
-  // GetPage(name: '/signInWeb', page: () => SignInWebPage()),
-  GetPage(name: '/signInWeb', page: () => MainHomeWeb()),
+  GetPage(name: '/signInWeb', page: () => SignInWebPage()),
   GetPage(name: '/signUp', page: () => SignUpPage()),
   GetPage(name: '/mainHome', page: () => MainHome()),
 ];
@@ -28,22 +28,23 @@ Future<void> main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .whenComplete(() {
+    if (GetPlatform.isWeb) {
+      //for Web
+      initialRoute = '/signInWeb';
+      runApp(const MyApp());
+    } else {
+      //for Mobile
 
-        if (GetPlatform.isWeb) {
-          //for Web
-          initialRoute = '/signInWeb';
-          runApp(const MyApp());
-        } else {
-          //for Mobile
-          initialRoute = '/intro';
-          runApp(const MyApp());
-        }
-
-
-
-      });
-
-  
+      var user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        initialRoute = '/intro';
+        runApp(const MyApp());
+      } else {
+        initialRoute = '/mainHome';
+        runApp(const MyApp());
+      }
+    }
+  });
 }
 
 class MyApp extends StatelessWidget {

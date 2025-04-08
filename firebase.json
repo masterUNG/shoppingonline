@@ -1,1 +1,55 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"shoppingonline-57e3c","appId":"1:1035917486333:android:caa2ca036bc45fd4617694","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"shoppingonline-57e3c","appId":"1:1035917486333:ios:9ff4ecdff4c409eb617694","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"shoppingonline-57e3c","appId":"1:1035917486333:ios:9ff4ecdff4c409eb617694","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"shoppingonline-57e3c","configurations":{"android":"1:1035917486333:android:caa2ca036bc45fd4617694","ios":"1:1035917486333:ios:9ff4ecdff4c409eb617694","macos":"1:1035917486333:ios:9ff4ecdff4c409eb617694","web":"1:1035917486333:web:1e422b8268fc1c8b617694","windows":"1:1035917486333:web:1667fa8a9aceda72617694"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "shoppingonline-57e3c",
+          "appId": "1:1035917486333:android:caa2ca036bc45fd4617694",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "shoppingonline-57e3c",
+          "appId": "1:1035917486333:ios:9ff4ecdff4c409eb617694",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "shoppingonline-57e3c",
+          "appId": "1:1035917486333:ios:9ff4ecdff4c409eb617694",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "shoppingonline-57e3c",
+          "configurations": {
+            "android": "1:1035917486333:android:caa2ca036bc45fd4617694",
+            "ios": "1:1035917486333:ios:9ff4ecdff4c409eb617694",
+            "macos": "1:1035917486333:ios:9ff4ecdff4c409eb617694",
+            "web": "1:1035917486333:web:1e422b8268fc1c8b617694",
+            "windows": "1:1035917486333:web:1667fa8a9aceda72617694"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
