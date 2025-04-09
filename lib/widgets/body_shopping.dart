@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:shoppingonline/models/category_model.dart';
 import 'package:shoppingonline/models/product_model.dart';
+import 'package:shoppingonline/states/detail_product.dart';
+import 'package:shoppingonline/states/list_all_product.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
@@ -10,11 +12,16 @@ import 'package:shoppingonline/widgets/widget_form.dart';
 import 'package:shoppingonline/widgets/widget_image_asset.dart';
 import 'package:shoppingonline/widgets/widget_progress.dart';
 
-class BodyShopping extends StatelessWidget {
+class BodyShopping extends StatefulWidget {
   const BodyShopping({
     super.key,
   });
 
+  @override
+  State<BodyShopping> createState() => _BodyShoppingState();
+}
+
+class _BodyShoppingState extends State<BodyShopping> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -88,6 +95,7 @@ class BodyShopping extends StatelessWidget {
                         )),
                     Text('Promotion :',
                         style: AppConstant.h2Style(fontSize: 18)),
+                    SizedBox(height: 16),
                     FutureBuilder(
                       future: AppService().readAllProduct(),
                       builder: (context, snapshot) {
@@ -154,8 +162,21 @@ class BodyShopping extends StatelessWidget {
                         }
                       },
                     ),
-                    Text('สินค้าแนะนำ :',
-                        style: AppConstant.h2Style(fontSize: 18)),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('สินค้าแนะนำ :',
+                            style: AppConstant.h2Style(fontSize: 18)),
+                        WidgetButton(
+                          text: 'ดูทั้งหมด',
+                          onPressed: () {
+                            Get.to(ListAllProduct());
+                          },
+                          type: GFButtonType.transparent,
+                        )
+                      ],
+                    ),
                     Container(
                         // decoration: BoxDecoration(border: Border.all()),
                         width: Get.width,
@@ -179,50 +200,52 @@ class BodyShopping extends StatelessWidget {
                                         crossAxisSpacing: 16,
                                         childAspectRatio: 1 / 1.3),
                                 itemCount: 4,
-                                itemBuilder: (context, index) => Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 16),
-                                  decoration: BoxDecoration(
-                                      color: GFColors.LIGHT,
-                                      borderRadius: BorderRadius.circular(16)),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        width: 100,
-                                        height: 100,
-                                        child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            child: Image.network(
-                                              productModels[index].urlImage,
-                                              fit: BoxFit.cover,
-                                            )),
-                                      ),
-                                      SizedBox(height: 16),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            productModels[index].name,
-                                            style: AppConstant.h2Style(
-                                                fontSize: 14),
-                                            maxLines: 1,
-                                          ),
-                                          Text(
-                                            productModels[index].detail,
-                                            style: AppConstant.h3Style(
-                                                fontSize: 11),
-                                            maxLines: 2,
-                                          ),
-                                          Text(
-                                            '฿${productModels[index].price}',
-                                            style: AppConstant.h2Style(
-                                                fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                itemBuilder: (context, index) => InkWell(onTap: () => Get.to(DetailProduct(productModel: productModels[index])),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 16),
+                                    decoration: BoxDecoration(
+                                        color: GFColors.LIGHT,
+                                        borderRadius: BorderRadius.circular(16)),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 100,
+                                          height: 100,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              child: Image.network(
+                                                productModels[index].urlImage,
+                                                fit: BoxFit.cover,
+                                              )),
+                                        ),
+                                        SizedBox(height: 16),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              productModels[index].name,
+                                              style: AppConstant.h2Style(
+                                                  fontSize: 14),
+                                              maxLines: 1,
+                                            ),
+                                            Text(
+                                              productModels[index].detail,
+                                              style: AppConstant.h3Style(
+                                                  fontSize: 11),
+                                              maxLines: 2,
+                                            ),
+                                            Text(
+                                              '฿${productModels[index].price}',
+                                              style: AppConstant.h2Style(
+                                                  fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

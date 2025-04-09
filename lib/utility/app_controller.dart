@@ -13,9 +13,13 @@ class AppController extends GetxController {
 
   RxInt indexBody = 0.obs;
 
+  RxInt amount = 1.obs;
+
   RxList<CategoryModel?> chooseCategoryModels = <CategoryModel?>[null].obs;
 
   RxList<String> urlImages = <String>[].obs;
+
+  
 
   
 

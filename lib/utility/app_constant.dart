@@ -32,15 +32,18 @@ class AppConstant {
       fontWeight: FontWeight.bold,
       fontFamily: 'Kodchasan',
       color: color);
-  static TextStyle h2Style({double? fontSize}) => TextStyle(
+  static TextStyle h2Style({double? fontSize, Color? color}) => TextStyle(
       fontSize: fontSize ?? 24,
+      color: color,
       fontWeight: FontWeight.bold,
       fontFamily: 'Kodchasan');
-  static TextStyle h3Style({FontWeight? fontWeight, Color? color, double? fontSize}) => TextStyle(
-      color: color,
-      fontSize: fontSize ?? 15,
-      fontWeight: fontWeight ?? FontWeight.normal,
-      fontFamily: 'Kodchasan');
+  static TextStyle h3Style(
+          {FontWeight? fontWeight, Color? color, double? fontSize}) =>
+      TextStyle(
+          color: color,
+          fontSize: fontSize ?? 15,
+          fontWeight: fontWeight ?? FontWeight.normal,
+          fontFamily: 'Kodchasan');
 
   static BoxDecoration borderRadius() {
     return BoxDecoration(
