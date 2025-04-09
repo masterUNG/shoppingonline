@@ -33,7 +33,7 @@ class WidgetForm extends StatelessWidget {
         keyboardType: keyboardType,
         style: AppConstant.h3Style(),
         decoration: InputDecoration(
-            filled: true,
+            filled: true,fillColor: GFColors.LIGHT,
             border: InputBorder.none,
             labelText: label,
             labelStyle: AppConstant.h3Style(),

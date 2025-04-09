@@ -36,9 +36,9 @@ class AppConstant {
       fontSize: fontSize ?? 24,
       fontWeight: FontWeight.bold,
       fontFamily: 'Kodchasan');
-  static TextStyle h3Style({FontWeight? fontWeight, Color? color}) => TextStyle(
+  static TextStyle h3Style({FontWeight? fontWeight, Color? color, double? fontSize}) => TextStyle(
       color: color,
-      fontSize: 15,
+      fontSize: fontSize ?? 15,
       fontWeight: fontWeight ?? FontWeight.normal,
       fontFamily: 'Kodchasan');
 
