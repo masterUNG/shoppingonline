@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shoppingonline/models/cart_model.dart';
 import 'package:shoppingonline/models/category_model.dart';
 import 'package:shoppingonline/models/product_model.dart';
+import 'package:shoppingonline/models/user_model.dart';
 import 'package:shoppingonline/state_web/main_home_web.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
@@ -14,38 +16,79 @@ import 'package:shoppingonline/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  Future<List<ProductModel>> readAllProduct() async {
+  Future<ProductModel?> findProductById({required String docIdProduct}) async {
 
+    ProductModel? productModel;
+
+    var result = await FirebaseFirestore.instance.collection('product${AppConstant.keyApp}').doc(docIdProduct).get();
+    if (result.data() != null) {
+      productModel = ProductModel.fromMap(result.data()!);
+    }
+
+    return productModel;
+  }
+
+  Future<List<CartModel>> readAllCart() async {
+    var cartModels = <CartModel>[];
+
+    var result = await FirebaseFirestore.instance
+        .collection('user${AppConstant.keyApp}')
+        .doc(appController.currentUserModels.last.uid)
+        .collection('cart')
+        .orderBy('timestamp')
+        .get();
+
+    if (result.docs.isNotEmpty) {
+      for (var element in result.docs) {
+        Map<String, dynamic> map = element.data();
+        map['docId'] = element.id;
+        cartModels.add(CartModel.fromMap(map));
+      }
+    }
+
+    return cartModels;
+  }
+
+  Future<void> findCurrentUserModels() async {
+    var user = FirebaseAuth.instance.currentUser;
+
+    var result = await FirebaseFirestore.instance
+        .collection('user${AppConstant.keyApp}')
+        .doc(user!.uid)
+        .get();
+
+    appController.currentUserModels.add(UserModel.fromMap(result.data()!));
+  }
+
+  Future<List<ProductModel>> readAllProduct() async {
     var productModels = <ProductModel>[];
 
-    var result = await FirebaseFirestore.instance.collection('product${AppConstant.keyApp}').orderBy('timestamp', descending: true).get();
+    var result = await FirebaseFirestore.instance
+        .collection('product${AppConstant.keyApp}')
+        .orderBy('timestamp', descending: true)
+        .get();
     for (var element in result.docs) {
-      
       ProductModel productModel = ProductModel.fromMap(element.data());
-      Map<String,dynamic> map = productModel.toMap();
+      Map<String, dynamic> map = productModel.toMap();
+      map['docId'] = element.id;
 
       productModels.add(ProductModel.fromMap(map));
     }
 
     return productModels;
-
   }
 
   Future<List<CategoryModel>> readAllCategory() async {
-
     var categoryModels = <CategoryModel>[];
 
     var result = await FirebaseFirestore.instance.collection('category').get();
     for (var element in result.docs) {
-
       CategoryModel categoryModel = CategoryModel.fromMap(element.data());
-      Map<String,dynamic> map = categoryModel.toMap();
+      Map<String, dynamic> map = categoryModel.toMap();
 
       map['docId'] = element.id;
       categoryModels.add(CategoryModel.fromMap(map));
-      
     }
-
 
     return categoryModels;
   }

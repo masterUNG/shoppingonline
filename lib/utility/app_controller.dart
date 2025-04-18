@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shoppingonline/models/category_model.dart';
+import 'package:shoppingonline/models/user_model.dart';
 
 class AppController extends GetxController {
 
@@ -18,6 +19,8 @@ class AppController extends GetxController {
   RxList<CategoryModel?> chooseCategoryModels = <CategoryModel?>[null].obs;
 
   RxList<String> urlImages = <String>[].obs;
+
+  RxList<UserModel> currentUserModels = <UserModel>[].obs;
 
   
 

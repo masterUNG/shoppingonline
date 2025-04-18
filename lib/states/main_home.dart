@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
+import 'package:shoppingonline/utility/app_service.dart';
+import 'package:shoppingonline/widgets/body_cart.dart';
 import 'package:shoppingonline/widgets/body_shopping.dart';
 import 'package:shoppingonline/widgets/widget_image_asset.dart';
 
@@ -25,7 +27,7 @@ class _MainHomeState extends State<MainHome> {
   ];
   var bodys = <Widget>[
     BodyShopping(),
-    Text('ตระกร้า'),
+    BodyCart(),
     Text('ออเตอร์'),
     Text('โปรไฟร์')
   ];
@@ -35,6 +37,8 @@ class _MainHomeState extends State<MainHome> {
   @override
   void initState() {
     super.initState();
+
+    AppService().findCurrentUserModels();
 
     for (var i = 0; i < bodys.length; i++) {
       items.add(
