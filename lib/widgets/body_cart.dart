@@ -41,7 +41,7 @@ class _BodyCartState extends State<BodyCart> {
                 children: [
                   SizedBox(
                     width: Get.width,
-                    height: Get.height * 0.5,
+                    height: Get.height * 0.5 + 50,
                     child: ListView.builder(
                         physics: ScrollPhysics(),
                         shrinkWrap: true,
@@ -183,17 +183,62 @@ class _BodyCartState extends State<BodyCart> {
                             )),
                   ),
                   Positioned(
-                    bottom: 0,
-                    child: Container(color: Colors.grey,
-                      width: Get.width,
-                      height: Get.height * 0.5 -180,
+                    bottom: 50,
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: GFColors.LIGHT,
+                          borderRadius: BorderRadius.circular(10)),
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      width: Get.width - 16,
+                      height: 130,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('data'),
-                          Spacer(),
-                          WidgetButton(
-                              text: 'Process to CheckOut', onPressed: () {}),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('จำนวนรายการ', style: AppConstant.h3Style()),
+                                Text('data2',
+                                    style: AppConstant.h3Style(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('รวมราคา', style: AppConstant.h3Style()),
+                                Text('data2',
+                                    style: AppConstant.h3Style(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('ค่าขนส่ง', style: AppConstant.h3Style()),
+                                Text('data2',
+                                    style: AppConstant.h3Style(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('รวมราคาทั้งหมด', style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
+                                Text('data2',
+                                    style: AppConstant.h3Style(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
                         ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,left: 8,
+                    child: SizedBox(width: Get.width - 16,
+                      // margin: EdgeInsets.symmetric(horizontal: 8),
+                      child: WidgetButton(
+                        text: 'Process to CheckOut',
+                        onPressed: () {},
+                        // fullWidthButton: true,
                       ),
                     ),
                   ),
