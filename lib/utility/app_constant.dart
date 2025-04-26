@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 class AppConstant {
   static String keyApp = '-ung';
@@ -26,6 +27,11 @@ class AppConstant {
     'images/cat13.png',
     'images/cat14.png',
   ];
+
+  static BoxDecoration bgGrey() {
+    return BoxDecoration(
+        color: GFColors.LIGHT, borderRadius: BorderRadius.circular(10));
+  }
 
   static TextStyle h1Style({double? fontSize, Color? color}) => TextStyle(
       fontSize: fontSize ?? 36,

@@ -16,11 +16,37 @@ import 'package:shoppingonline/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  Future<ProductModel?> findProductById({required String docIdProduct}) async {
+  Future<void> editProfile({required Map<String, dynamic> mapProfile}) async {
+    await FirebaseFirestore.instance
+        .collection('user${AppConstant.keyApp}')
+        .doc(appController.currentUserModels.last.uid)
+        .update(mapProfile)
+        .whenComplete(
+          () => findCurrentUserModels(),
+        );
+  }
 
+  Future<void> calculateSubtotal() async {
+    appController.subTotals.add(0.0);
+
+    for (var i = 0; i < appController.cartModels.length; i++) {
+      // ProductModel? productModel = await findProductById(
+      //     docIdProduct: appController.cartModels[i].docIdProduct);
+
+      appController.subTotals.add(appController.subTotals.last +
+          num.parse((num.parse(appController.productModels[i].price) *
+                  appController.amounts[i])
+              .toString()));
+    }
+  }
+
+  Future<ProductModel?> findProductById({required String docIdProduct}) async {
     ProductModel? productModel;
 
-    var result = await FirebaseFirestore.instance.collection('product${AppConstant.keyApp}').doc(docIdProduct).get();
+    var result = await FirebaseFirestore.instance
+        .collection('product${AppConstant.keyApp}')
+        .doc(docIdProduct)
+        .get();
     if (result.data() != null) {
       productModel = ProductModel.fromMap(result.data()!);
     }
@@ -28,25 +54,45 @@ class AppService {
     return productModel;
   }
 
-  Future<List<CartModel>> readAllCart() async {
-    var cartModels = <CartModel>[];
-
-    var result = await FirebaseFirestore.instance
-        .collection('user${AppConstant.keyApp}')
-        .doc(appController.currentUserModels.last.uid)
-        .collection('cart')
-        .orderBy('timestamp')
-        .get();
-
-    if (result.docs.isNotEmpty) {
-      for (var element in result.docs) {
-        Map<String, dynamic> map = element.data();
-        map['docId'] = element.id;
-        cartModels.add(CartModel.fromMap(map));
+  Future<void> readAllCart() async {
+    try {
+      if (appController.cartModels.isNotEmpty) {
+        appController.cartModels.clear();
       }
-    }
 
-    return cartModels;
+      if (appController.amounts.isNotEmpty) {
+        appController.amounts.clear();
+      }
+
+      if (appController.productModels.isNotEmpty) {
+        appController.productModels.clear();
+      }
+
+      var result = await FirebaseFirestore.instance
+          .collection('user${AppConstant.keyApp}')
+          .doc(appController.currentUserModels.last.uid)
+          .collection('cart')
+          .orderBy('timestamp')
+          .get();
+
+      if (result.docs.isNotEmpty) {
+        for (var element in result.docs) {
+          Map<String, dynamic> map = element.data();
+          map['docId'] = element.id;
+
+          appController.cartModels.add(CartModel.fromMap(map));
+
+          appController.amounts.add(map['amount']);
+
+          ProductModel? productModel =
+              await findProductById(docIdProduct: map['docIdProduct']);
+
+          appController.productModels.add(productModel!);
+        }
+      }
+    } finally {
+      appController.display.value = true;
+    }
   }
 
   Future<void> findCurrentUserModels() async {
@@ -93,7 +139,7 @@ class AppService {
     return categoryModels;
   }
 
-  Future<String?> findUrlImageByUploadWeb() async {
+  Future<String?> findUrlImageByUpload({required String path}) async {
     String? urlImage;
 
     var result = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -105,7 +151,7 @@ class AppService {
           bucket: 'gs://shoppingonline-57e3c.firebasestorage.app');
       Reference reference = firebaseStorage
           .ref()
-          .child('products/${DateTime.now().toIso8601String()}.jpg');
+          .child('$path/${DateTime.now().toIso8601String()}.jpg');
       UploadTask uploadTask = reference.putData(
           imageByte, SettableMetadata(contentType: 'image/jpeg'));
 

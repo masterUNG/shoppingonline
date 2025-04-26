@@ -88,7 +88,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                           icon: Icons.photo_outlined,
                           onPressed: () async {
                             String? urlImage =
-                                await AppService().findUrlImageByUploadWeb();
+                                await AppService().findUrlImageByUpload(path: 'products');
                             print('##6april ==> $urlImage');
 
                             appController.urlImages.add(urlImage!);

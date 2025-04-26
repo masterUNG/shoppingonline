@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:shoppingonline/models/cart_model.dart';
 import 'package:shoppingonline/models/category_model.dart';
+import 'package:shoppingonline/models/product_model.dart';
 import 'package:shoppingonline/models/user_model.dart';
 
 class AppController extends GetxController {
@@ -21,6 +23,20 @@ class AppController extends GetxController {
   RxList<String> urlImages = <String>[].obs;
 
   RxList<UserModel> currentUserModels = <UserModel>[].obs;
+
+  RxList<CartModel> cartModels = <CartModel>[].obs;
+
+  RxList<num> amounts = <num>[].obs;
+
+  RxList<num> subTotals = <num>[0.0].obs;
+
+  RxList<num> deliverys = <num>[0.0].obs;
+
+  RxList<ProductModel> productModels = <ProductModel>[].obs;
+
+  
+
+  
 
   
 

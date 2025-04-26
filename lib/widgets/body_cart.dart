@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:shoppingonline/models/cart_model.dart';
-import 'package:shoppingonline/models/product_model.dart';
+import 'package:shoppingonline/states/check_out.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
 import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
-import 'package:shoppingonline/widgets/widget_progress.dart';
 
 class BodyCart extends StatefulWidget {
   const BodyCart({
@@ -23,165 +21,165 @@ class _BodyCartState extends State<BodyCart> {
   AppController appController = Get.put(AppController());
 
   @override
+  void initState() {
+    super.initState();
+
+    appController.display.value = false;
+
+    AppService().readAllCart().whenComplete(() {
+      AppService().calculateSubtotal();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: AppService().readAllCart(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return WidgetProgress();
-        } else {
-          List<CartModel> cartModels = snapshot.data!;
-          if (cartModels.isEmpty) {
-            return Text('ไม่มีสินค้าใน ตระกล้า', style: AppConstant.h2Style());
-          } else {
-            return SizedBox(
+    return Obx(() {
+      return appController.display.value
+          ? SizedBox(
               width: Get.width,
               height: Get.height,
               child: Stack(
                 children: [
-                  SizedBox(
-                    width: Get.width,
-                    height: Get.height * 0.5 + 50,
-                    child: ListView.builder(
-                        physics: ScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: cartModels.length,
-                        itemBuilder: (context, index) => FutureBuilder(
-                              future: AppService().findProductById(
-                                  docIdProduct: cartModels[index].docIdProduct),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return WidgetProgress();
-                                } else {
-                                  if (snapshot.hasData) {
-                                    ProductModel productModel = snapshot.data!;
-                                    return Container(
-                                      height: 120,
-                                      width: Get.width,
-                                      decoration: BoxDecoration(
-                                          color: GFColors.LIGHT,
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      padding: EdgeInsets.all(16),
-                                      margin: EdgeInsets.only(bottom: 8),
-                                      child: Row(
+                  appController.productModels.isEmpty
+                      ? SizedBox()
+                      : SizedBox(
+                          width: Get.width,
+                          height: Get.height * 0.5 + 50,
+                          child: ListView.builder(
+                              physics: ScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              itemCount: appController.cartModels.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  height: 140,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                      color: GFColors.LIGHT,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  padding: EdgeInsets.all(16),
+                                  margin: EdgeInsets.only(bottom: 8),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 80,
+                                        height: 80,
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                            child: appController
+                                                    .productModels.isEmpty
+                                                ? SizedBox()
+                                                : Image.network(
+                                                    appController
+                                                        .productModels[index]
+                                                        .urlImage,
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                      ),
+                                      SizedBox(width: 16),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            width: 80,
-                                            height: 80,
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(40),
-                                                child: Image.network(
-                                                  productModel.urlImage,
-                                                  fit: BoxFit.cover,
-                                                )),
+                                            width: Get.width -
+                                                16 -
+                                                16 -
+                                                80 -
+                                                16 -
+                                                16 -
+                                                16,
+                                            child: Text(
+                                                appController
+                                                    .productModels[index].name,
+                                                maxLines: 1,
+                                                style: AppConstant.h2Style(
+                                                    fontSize: 15)),
                                           ),
-                                          SizedBox(width: 16),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width: Get.width -
-                                                    16 -
-                                                    16 -
-                                                    80 -
-                                                    16 -
-                                                    16 -
-                                                    16,
-                                                child: Text(productModel.name,
-                                                    maxLines: 1,
+                                          SizedBox(
+                                            width: Get.width -
+                                                16 -
+                                                16 -
+                                                80 -
+                                                16 -
+                                                16 -
+                                                16,
+                                            child: Text(
+                                                appController
+                                                    .productModels[index]
+                                                    .detail,
+                                                maxLines: 2,
+                                                style: AppConstant.h3Style()),
+                                          ),
+                                          SizedBox(
+                                            width: Get.width -
+                                                16 -
+                                                16 -
+                                                80 -
+                                                16 -
+                                                16 -
+                                                16,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                    '฿${appController.productModels[index].price}',
                                                     style: AppConstant.h2Style(
                                                         fontSize: 15)),
-                                              ),
-                                              SizedBox(
-                                                width: Get.width -
-                                                    16 -
-                                                    16 -
-                                                    80 -
-                                                    16 -
-                                                    16 -
-                                                    16,
-                                                child: Text(productModel.detail,
-                                                    maxLines: 2,
-                                                    style:
-                                                        AppConstant.h3Style()),
-                                              ),
-                                              SizedBox(
-                                                width: Get.width -
-                                                    16 -
-                                                    16 -
-                                                    80 -
-                                                    16 -
-                                                    16 -
-                                                    16,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
-                                                    Text(
-                                                        '฿${productModel.price}',
+                                                    WidgetIconButton(
+                                                      icon: Icons.remove_circle,
+                                                      onPressed: () {
+                                                        if (appController
+                                                                    .amounts[
+                                                                index] >
+                                                            1) {
+                                                          appController
+                                                              .amounts[index]--;
+
+                                                          AppService()
+                                                              .calculateSubtotal();
+                                                        }
+                                                      },
+                                                      size: GFSize.SMALL,
+                                                      colorIcon:
+                                                          GFColors.DANGER,
+                                                    ),
+                                                    Obx(() => Text(
+                                                        appController
+                                                            .amounts[index]
+                                                            .toString(),
                                                         style:
                                                             AppConstant.h2Style(
-                                                                fontSize: 15)),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        WidgetIconButton(
-                                                          icon: Icons
-                                                              .remove_circle,
-                                                          onPressed: () {
-                                                            if (appController
-                                                                    .amount
-                                                                    .value >
-                                                                1) {
-                                                              appController
-                                                                  .amount
-                                                                  .value--;
-                                                            }
-                                                          },
-                                                          size: GFSize.SMALL,
-                                                          colorIcon:
-                                                              GFColors.DANGER,
-                                                        ),
-                                                        Obx(() => Text(
-                                                            appController.amount
-                                                                .toString(),
-                                                            style: AppConstant
-                                                                .h2Style(
-                                                                    fontSize:
-                                                                        15))),
-                                                        WidgetIconButton(
-                                                            icon: Icons
-                                                                .add_circle,
-                                                            onPressed: () {
-                                                              appController
-                                                                  .amount
-                                                                  .value++;
-                                                            },
-                                                            size: GFSize.SMALL),
-                                                      ],
-                                                    ),
+                                                                fontSize: 15))),
+                                                    WidgetIconButton(
+                                                        icon: Icons.add_circle,
+                                                        onPressed: () {
+                                                          appController
+                                                              .amounts[index]++;
+
+                                                          AppService()
+                                                              .calculateSubtotal();
+                                                        },
+                                                        size: GFSize.SMALL),
                                                   ],
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    );
-                                  } else {
-                                    return SizedBox();
-                                  }
-                                }
-                              },
-                            )),
-                  ),
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
                   Positioned(
                     bottom: 50,
                     child: Container(
@@ -198,8 +196,9 @@ class _BodyCartState extends State<BodyCart> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('จำนวนรายการ', style: AppConstant.h3Style()),
-                                Text('data2',
+                                Text('จำนวนรายการ',
+                                    style: AppConstant.h3Style()),
+                                Text(appController.cartModels.length.toString(),
                                     style: AppConstant.h3Style(
                                         fontWeight: FontWeight.bold)),
                               ]),
@@ -207,7 +206,7 @@ class _BodyCartState extends State<BodyCart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('รวมราคา', style: AppConstant.h3Style()),
-                                Text('data2',
+                                Text('฿${appController.subTotals.last}',
                                     style: AppConstant.h3Style(
                                         fontWeight: FontWeight.bold)),
                               ]),
@@ -215,39 +214,44 @@ class _BodyCartState extends State<BodyCart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('ค่าขนส่ง', style: AppConstant.h3Style()),
-                                Text('data2',
+                                Text('฿${appController.deliverys.last}',
                                     style: AppConstant.h3Style(
                                         fontWeight: FontWeight.bold)),
                               ]),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('รวมราคาทั้งหมด', style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
-                                Text('data2',
+                                Text('รวมราคาทั้งหมด',
                                     style: AppConstant.h3Style(
                                         fontWeight: FontWeight.bold)),
+                                Text('฿${appController.subTotals.last}',
+                                    style: AppConstant.h3Style(
+                                        fontWeight: FontWeight.bold, color: AppConstant.primaryColor)),
                               ]),
                         ],
                       ),
                     ),
                   ),
                   Positioned(
-                    bottom: 0,left: 8,
-                    child: SizedBox(width: Get.width - 16,
+                    bottom: 0,
+                    left: 8,
+                    child: SizedBox(
+                      width: Get.width - 16,
                       // margin: EdgeInsets.symmetric(horizontal: 8),
                       child: WidgetButton(
                         text: 'Process to CheckOut',
-                        onPressed: () {},
+                        onPressed: () {
+
+                          Get.to(CheckOut());
+                        },
                         // fullWidthButton: true,
                       ),
                     ),
                   ),
                 ],
               ),
-            );
-          }
-        }
-      },
-    );
+            )
+          : SizedBox();
+    });
   }
 }
