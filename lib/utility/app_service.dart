@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +16,38 @@ import 'package:shoppingonline/utility/app_controller.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  
+
+Future<Position> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // เช็คว่าเปิดบริการ location หรือยัง
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // ถ้าไม่ได้เปิด ต้องแจ้งผู้ใช้ก่อน
+    throw Exception('Location services are disabled.');
+  }
+
+  // ขอ permission ถ้ายังไม่ได้ให้
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      // ปฏิเสธ permission
+      throw Exception('Location permissions are denied');
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    // ถูกปฏิเสธแบบถาวร
+    throw Exception('Location permissions are permanently denied.');
+  }
+
+  // ได้ permission แล้ว
+  return await Geolocator.getCurrentPosition();
+}
 
   Future<void> editProfile({required Map<String, dynamic> mapProfile}) async {
     await FirebaseFirestore.instance
