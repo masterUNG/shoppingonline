@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:shoppingonline/states/list_my_address.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
 
@@ -32,7 +34,9 @@ class WidgetDeliveryAddress extends StatelessWidget {
                 WidgetIconButton(
                     size: GFSize.SMALL,
                     icon: Icons.arrow_forward_ios,
-                    onPressed: () {}),
+                    onPressed: () {
+                      Get.to(ListMyAddress());
+                    }),
               ],
             )),
       ],

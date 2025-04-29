@@ -18,7 +18,7 @@ class WidgetBackButton extends StatelessWidget {
     return WidgetIconButton(
       icon: Icons.arrow_back,
       onPressed: onPress ?? () => Get.back(),
-      type: GFButtonType.outline,
+      type: GFButtonType.outline,size: GFSize.SMALL,
     );
   }
 }
