@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shoppingonline/models/address_delivery_model.dart';
 import 'package:shoppingonline/models/cart_model.dart';
 import 'package:shoppingonline/models/category_model.dart';
 import 'package:shoppingonline/models/product_model.dart';
@@ -17,37 +18,63 @@ import 'package:shoppingonline/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  
+  Future<AddressDeliveryModel?> findAddressDeliveryModelByDocId({required String docId}) async {
 
-Future<Position> determinePosition() async {
-  bool serviceEnabled;
-  LocationPermission permission;
-
-  // เช็คว่าเปิดบริการ location หรือยัง
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    // ถ้าไม่ได้เปิด ต้องแจ้งผู้ใช้ก่อน
-    throw Exception('Location services are disabled.');
+    var documentSnapshot = await FirebaseFirestore.instance.collection('user${AppConstant.keyApp}').doc(appController.currentUserModels.last.uid).collection('addressDelivery').doc(docId).get();
+    if (documentSnapshot.data() != null) {
+      return AddressDeliveryModel.fromMap(documentSnapshot.data()!);
+    }
+    return null;
   }
 
-  // ขอ permission ถ้ายังไม่ได้ให้
-  permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      // ปฏิเสธ permission
-      throw Exception('Location permissions are denied');
+  Future<void> readAllAddressDeliveryModel() async {
+    if (appController.addressDeliveryModels.isNotEmpty) {
+      appController.addressDeliveryModels.clear();
+    }
+
+    var querySnapShots = await FirebaseFirestore.instance
+        .collection('user${AppConstant.keyApp}')
+        .doc(appController.currentUserModels.last.uid)
+        .collection('addressDelivery')
+        .get();
+
+    if (querySnapShots.docs.isNotEmpty) {
+      for (var element in querySnapShots.docs) {
+        appController.addressDeliveryModels
+            .add(AddressDeliveryModel.fromMap(element.data()));
+      }
     }
   }
 
-  if (permission == LocationPermission.deniedForever) {
-    // ถูกปฏิเสธแบบถาวร
-    throw Exception('Location permissions are permanently denied.');
-  }
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-  // ได้ permission แล้ว
-  return await Geolocator.getCurrentPosition();
-}
+    // เช็คว่าเปิดบริการ location หรือยัง
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // ถ้าไม่ได้เปิด ต้องแจ้งผู้ใช้ก่อน
+      throw Exception('Location services are disabled.');
+    }
+
+    // ขอ permission ถ้ายังไม่ได้ให้
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // ปฏิเสธ permission
+        throw Exception('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // ถูกปฏิเสธแบบถาวร
+      throw Exception('Location permissions are permanently denied.');
+    }
+
+    // ได้ permission แล้ว
+    return await Geolocator.getCurrentPosition();
+  }
 
   Future<void> editProfile({required Map<String, dynamic> mapProfile}) async {
     await FirebaseFirestore.instance

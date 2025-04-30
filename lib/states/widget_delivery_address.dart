@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:shoppingonline/models/address_delivery_model.dart';
 import 'package:shoppingonline/states/list_my_address.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
+import 'package:shoppingonline/utility/app_controller.dart';
+import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
+import 'package:shoppingonline/widgets/widget_progress.dart';
 
-class WidgetDeliveryAddress extends StatelessWidget {
+class WidgetDeliveryAddress extends StatefulWidget {
   const WidgetDeliveryAddress({
     super.key,
   });
+
+  @override
+  State<WidgetDeliveryAddress> createState() => _WidgetDeliveryAddressState();
+}
+
+class _WidgetDeliveryAddressState extends State<WidgetDeliveryAddress> {
+  AppController appController = Get.put(AppController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +37,44 @@ class WidgetDeliveryAddress extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.home_outlined),
+                    Obx(() => appController
+                                .currentUserModels.last.docIdAddressDelivery ==
+                            null
+                        ?  Icon(Icons.question_mark, color: GFColors.DANGER,) : Icon(Icons.home_outlined, color: Colors.black)),
                     SizedBox(width: 6),
-                    Text('data'),
+                    Obx(() => appController
+                                .currentUserModels.last.docIdAddressDelivery ==
+                            null
+                        ? Text(
+                            'ยังไม่ได้กำหนด',
+                            style: AppConstant.h3Style(
+                                color: GFColors.DANGER, fontSize: 14),
+                          )
+                        : FutureBuilder(
+                            future: AppService()
+                                .findAddressDeliveryModelByDocId(
+                                    docId: appController.currentUserModels.last
+                                        .docIdAddressDelivery!),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return WidgetProgress();
+                              } else {
+                                if (snapshot.hasData) {
+                                  AddressDeliveryModel addressDeliveryModel =
+                                      snapshot.data!;
+                                  return Text(
+                                    addressDeliveryModel.nameAddressDelivery,
+                                    style: AppConstant.h3Style(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal),
+                                  );
+                                } else {
+                                  return SizedBox();
+                                }
+                              }
+                            },
+                          )),
                   ],
                 ),
                 WidgetIconButton(
