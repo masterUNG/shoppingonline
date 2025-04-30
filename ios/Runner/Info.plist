@@ -45,5 +45,15 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to allow you to upload profile pictures and portfolio pictures.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>You need to provide microphone access to record video.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to allow you to upload profile pictures, portfolio pictures.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>You need to provide location access to calculate distance.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>You need to provide location access to calculate distance.</string>
 </dict>
 </plist>
