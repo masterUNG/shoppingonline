@@ -30,7 +30,7 @@ class _ListMyAddressState extends State<ListMyAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Address Delivery')),
+      appBar: AppBar(title: Text('My Address Delivery', style: AppConstant.h2Style())),
       body: Obx(
         () => appController.addressDeliveryModels.isEmpty
             ? SizedBox()

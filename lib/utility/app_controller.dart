@@ -39,6 +39,8 @@ class AppController extends GetxController {
 
   RxList<String?> chooseDocIdAddressDelicerys = <String?>[].obs;
 
+  RxInt indexChoosePaymentMethod = 0.obs;
+
   
 
   

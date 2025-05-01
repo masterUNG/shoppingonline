@@ -179,6 +179,12 @@ class _BodyCartState extends State<BodyCart> {
                                   ),
                                 );
                               }),
+
+
+
+
+
+                              
                         ),
                   Positioned(
                     bottom: 50,
@@ -231,6 +237,16 @@ class _BodyCartState extends State<BodyCart> {
                         ],
                       ),
                     ),
+
+
+
+
+
+
+
+
+
+
                   ),
                   Positioned(
                     bottom: 0,
