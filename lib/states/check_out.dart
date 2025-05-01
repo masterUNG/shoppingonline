@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:shoppingonline/models/order_model.dart';
 import 'package:shoppingonline/states/widget_delivery_address.dart';
 import 'package:shoppingonline/states/widget_payment_method.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
@@ -111,7 +112,8 @@ class _CheckOutState extends State<CheckOut> {
             SizedBox(height: 16),
             WidgetButton(text: 'Place Order', onPressed: ()async {
 
-              
+
+              OrderModel orderModel = OrderModel(ref: ref, uidOrder: appController.currentUserModels.last.uid, status: AppConstant.statusOrders[0], paymentMethod: AppConstant.paymentMethods[appController.indexChoosePaymentMethod.value], docIdAddressDelivery: docIdAddressDelivery, deliveryCost: deliveryCost, listCarts: listCarts, cartsCost: cartsCost, timestampPlaceOrder: timestampPlaceOrder);
 
 
 
