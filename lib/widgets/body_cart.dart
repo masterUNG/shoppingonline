@@ -179,12 +179,6 @@ class _BodyCartState extends State<BodyCart> {
                                   ),
                                 );
                               }),
-
-
-
-
-
-                              
                         ),
                   Positioned(
                     bottom: 50,
@@ -212,7 +206,7 @@ class _BodyCartState extends State<BodyCart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('รวมราคา', style: AppConstant.h3Style()),
-                                Text('฿${appController.subTotals.last}',
+                                Text('฿${appController.cartCosts.last}',
                                     style: AppConstant.h3Style(
                                         fontWeight: FontWeight.bold)),
                               ]),
@@ -220,7 +214,7 @@ class _BodyCartState extends State<BodyCart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('ค่าขนส่ง', style: AppConstant.h3Style()),
-                                Text('฿${appController.deliverys.last}',
+                                Text('฿${appController.deliveryCosts.last}',
                                     style: AppConstant.h3Style(
                                         fontWeight: FontWeight.bold)),
                               ]),
@@ -230,23 +224,14 @@ class _BodyCartState extends State<BodyCart> {
                                 Text('รวมราคาทั้งหมด',
                                     style: AppConstant.h3Style(
                                         fontWeight: FontWeight.bold)),
-                                Text('฿${appController.subTotals.last}',
+                                Text('฿${appController.cartCosts.last}',
                                     style: AppConstant.h3Style(
-                                        fontWeight: FontWeight.bold, color: AppConstant.primaryColor)),
+                                        fontWeight: FontWeight.bold,
+                                        color: AppConstant.primaryColor)),
                               ]),
                         ],
                       ),
                     ),
-
-
-
-
-
-
-
-
-
-
                   ),
                   Positioned(
                     bottom: 0,
@@ -257,8 +242,15 @@ class _BodyCartState extends State<BodyCart> {
                       child: WidgetButton(
                         text: 'Process to CheckOut',
                         onPressed: () {
-
-                          Get.to(CheckOut());
+                          Get.to(CheckOut())?.then(
+                            (value) {
+                              if (value ?? false) {
+                                AppService().readAllCart().whenComplete(() {
+                                  AppService().calculateSubtotal();
+                                });
+                              }
+                            },
+                          );
                         },
                         // fullWidthButton: true,
                       ),

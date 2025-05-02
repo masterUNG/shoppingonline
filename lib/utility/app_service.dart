@@ -18,9 +18,14 @@ import 'package:shoppingonline/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  Future<AddressDeliveryModel?> findAddressDeliveryModelByDocId({required String docId}) async {
-
-    var documentSnapshot = await FirebaseFirestore.instance.collection('user${AppConstant.keyApp}').doc(appController.currentUserModels.last.uid).collection('addressDelivery').doc(docId).get();
+  Future<AddressDeliveryModel?> findAddressDeliveryModelByDocId(
+      {required String docId}) async {
+    var documentSnapshot = await FirebaseFirestore.instance
+        .collection('user${AppConstant.keyApp}')
+        .doc(appController.currentUserModels.last.uid)
+        .collection('addressDelivery')
+        .doc(docId)
+        .get();
     if (documentSnapshot.data() != null) {
       return AddressDeliveryModel.fromMap(documentSnapshot.data()!);
     }
@@ -87,13 +92,13 @@ class AppService {
   }
 
   Future<void> calculateSubtotal() async {
-    appController.subTotals.add(0.0);
+    appController.cartCosts.add(0.0);
 
     for (var i = 0; i < appController.cartModels.length; i++) {
       // ProductModel? productModel = await findProductById(
       //     docIdProduct: appController.cartModels[i].docIdProduct);
 
-      appController.subTotals.add(appController.subTotals.last +
+      appController.cartCosts.add(appController.cartCosts.last +
           num.parse((num.parse(appController.productModels[i].price) *
                   appController.amounts[i])
               .toString()));

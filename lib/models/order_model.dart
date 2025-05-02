@@ -4,8 +4,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
-
-  final String ref;
+  final String? docId;
   final String uidOrder;
   final String status;
   final String paymentMethod;
@@ -15,12 +14,8 @@ class OrderModel {
   final num cartsCost;
   final Timestamp timestampPlaceOrder;
 
-
-  
-
-
   OrderModel({
-    required this.ref,
+    this.docId,
     required this.uidOrder,
     required this.status,
     required this.paymentMethod,
@@ -31,14 +26,9 @@ class OrderModel {
     required this.timestampPlaceOrder,
   });
 
-
-
-
-  
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'ref': ref,
+      'docId': docId,
       'uidOrder': uidOrder,
       'status': status,
       'paymentMethod': paymentMethod,
@@ -52,13 +42,13 @@ class OrderModel {
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      ref: (map['ref'] ?? '') as String,
+      docId: (map['docId'] ?? '') as String,
       uidOrder: (map['uidOrder'] ?? '') as String,
       status: (map['status'] ?? '') as String,
       paymentMethod: (map['paymentMethod'] ?? '') as String,
       docIdAddressDelivery: (map['docIdAddressDelivery'] ?? '') as String,
       deliveryCost: (map['deliveryCost'] ?? 0) as num,
-      listCarts: List<Map<String, dynamic>>.from(map['listCarts'] ),
+      listCarts: List<Map<String, dynamic>>.from(map['listCarts']),
       cartsCost: (map['cartsCost'] ?? 0) as num,
       timestampPlaceOrder: (map['timestampPlaceOrder']),
     );
@@ -66,5 +56,6 @@ class OrderModel {
 
   String toJson() => json.encode(toMap());
 
-  factory OrderModel.fromJson(String source) => OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory OrderModel.fromJson(String source) =>
+      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

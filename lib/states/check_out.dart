@@ -1,3 +1,5 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -6,7 +8,6 @@ import 'package:shoppingonline/states/widget_delivery_address.dart';
 import 'package:shoppingonline/states/widget_payment_method.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
-import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
 
 class CheckOut extends StatefulWidget {
@@ -110,16 +111,58 @@ class _CheckOutState extends State<CheckOut> {
             SizedBox(height: 16),
             totalPanal(),
             SizedBox(height: 16),
-            WidgetButton(text: 'Place Order', onPressed: ()async {
+            WidgetButton(
+                text: 'Place Order',
+                onPressed: () async {
+                  List<Map<String, dynamic>> listCarts = [];
+                  for (var element in appController.cartModels) {
+                    listCarts.add(element.toMap());
+                  }
 
+                  OrderModel orderModel = OrderModel(
+                      uidOrder: appController.currentUserModels.last.uid,
+                      status: AppConstant.statusOrders[0],
+                      paymentMethod: AppConstant.paymentMethods[
+                          appController.indexChoosePaymentMethod.value],
+                      docIdAddressDelivery: appController
+                          .currentUserModels.last.docIdAddressDelivery!,
+                      deliveryCost: appController.deliveryCosts.last,
+                      listCarts: listCarts,
+                      cartsCost: appController.cartCosts.last,
+                      timestampPlaceOrder: Timestamp.fromDate(DateTime.now()));
 
-              OrderModel orderModel = OrderModel(ref: ref, uidOrder: appController.currentUserModels.last.uid, status: AppConstant.statusOrders[0], paymentMethod: AppConstant.paymentMethods[appController.indexChoosePaymentMethod.value], docIdAddressDelivery: docIdAddressDelivery, deliveryCost: deliveryCost, listCarts: listCarts, cartsCost: cartsCost, timestampPlaceOrder: timestampPlaceOrder);
+                  DocumentReference documentReference =
+                      FirebaseFirestore.instance.collection('order${AppConstant.keyApp}').doc();
 
+                  await documentReference.set(orderModel.toMap()).whenComplete(
+                    () async {
 
+                      Map<String, dynamic> map = orderModel.toMap();
+                      map['docId'] = documentReference.id;
 
+                      await FirebaseFirestore.instance
+                          .collection('order${AppConstant.keyApp}')
+                          .doc(documentReference.id)
+                          .update(map)
+                          .whenComplete(
+                        () async {
+                          
 
+                          for (var element in appController.cartModels) {
+                            await FirebaseFirestore.instance
+                                .collection('user${AppConstant.keyApp}')
+                                .doc(appController.currentUserModels.last.uid)
+                                .collection('cart')
+                                .doc(element.docId)
+                                .delete();
+                          }
 
-            }),
+                          Get.back(result: true);
+                        },
+                      );
+                    },
+                  );
+                }),
             SizedBox(height: 16),
           ],
         ));
@@ -142,18 +185,18 @@ class _CheckOutState extends State<CheckOut> {
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('รวมราคา', style: AppConstant.h3Style()),
-            Text('฿${appController.subTotals.last}',
+            Text('฿${appController.cartCosts.last}',
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('ค่าขนส่ง', style: AppConstant.h3Style()),
-            Text('฿${appController.deliverys.last}',
+            Text('฿${appController.deliveryCosts.last}',
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('รวมราคาทั้งหมด',
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
-            Text('฿${appController.subTotals.last}',
+            Text('฿${appController.cartCosts.last}',
                 style: AppConstant.h3Style(
                     fontWeight: FontWeight.bold,
                     color: AppConstant.primaryColor)),
