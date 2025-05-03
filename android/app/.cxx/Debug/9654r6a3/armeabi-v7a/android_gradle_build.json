@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/Users/chaiwootphrombutr/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/chaiwootphrombutr/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/chaiwootphrombutr/WorkSpace/FlutterProj/shoppingonline/android/app/.cxx/Debug/9654r6a3/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/chaiwootphrombutr/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/chaiwootphrombutr/WorkSpace/FlutterProj/shoppingonline/android/app/.cxx/Debug/9654r6a3/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/chaiwootphrombutr/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/chaiwootphrombutr/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}
