@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shoppingonline/models/address_delivery_model.dart';
 import 'package:shoppingonline/models/cart_model.dart';
 import 'package:shoppingonline/models/category_model.dart';
+import 'package:shoppingonline/models/order_model.dart';
 import 'package:shoppingonline/models/product_model.dart';
 import 'package:shoppingonline/models/user_model.dart';
 import 'package:shoppingonline/state_web/main_home_web.dart';
@@ -17,6 +18,28 @@ import 'package:shoppingonline/utility/app_controller.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  Future<List<OrderModel>> readMyOrder({required String status}) async {
+    var orderModels = <OrderModel>[];
+
+    var querySnapshots = await FirebaseFirestore.instance
+        .collection('order${AppConstant.keyApp}')
+        .orderBy('timestampPlaceOrder')
+        .get();
+
+    for (var element in querySnapshots.docs) {
+
+      OrderModel orderModel = OrderModel.fromMap(element.data());
+
+      if (orderModel.uidOrder == appController.currentUserModels.last.uid) {
+        
+        if (orderModel.status == status) {
+          orderModels.add(orderModel);
+        }
+      }
+    }
+    return orderModels;
+  }
 
   Future<AddressDeliveryModel?> findAddressDeliveryModelByDocId(
       {required String docId}) async {
