@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+
 import 'package:shoppingonline/models/product_model.dart';
 import 'package:shoppingonline/state_web/add_new_product.dart';
 import 'package:shoppingonline/utility/app_service.dart';
@@ -32,19 +34,29 @@ class _ProductShopState extends State<ProductShop> {
                 } else {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 6, childAspectRatio: 1 / 1.4,mainAxisSpacing: 4, crossAxisSpacing: 4),
+                        crossAxisCount: 6,
+                        childAspectRatio: 1 / 1.4,
+                        mainAxisSpacing: 4,
+                        crossAxisSpacing: 4),
                     itemCount: productModels.length,
-                    itemBuilder: (context, index) =>
-                        Container(decoration: BoxDecoration(border: Border.all()),
-                          child: Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.network(productModels[index].urlImage, width: 110,height: 110, fit: BoxFit.cover),
-                              SizedBox(height: 16),
-                              Text(productModels[index].name, style: TextStyle(fontWeight: FontWeight.w500), maxLines: 1),
-                              Text(productModels[index].nameCatigory),
-                            ],
-                          ),
-                        ),
+                    itemBuilder: (context, index) => Container(
+                      decoration: BoxDecoration(border: Border.all()),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          WidgetImageNetwork(
+                              urlImage: productModels[index].urlImage,
+                              width: 110,
+                              height: 110),
+                          SizedBox(height: 16),
+                          Text(productModels[index].name,
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                              maxLines: 1),
+                          Text(productModels[index].nameCatigory),
+                        ],
+                      ),
+                    ),
                   );
                 }
               }
@@ -61,5 +73,35 @@ class _ProductShopState extends State<ProductShop> {
               },
               type: GFButtonType.outline2x),
         ));
+  }
+}
+
+class WidgetImageNetwork extends StatelessWidget {
+  const WidgetImageNetwork({
+    super.key,
+    required this.urlImage,
+    this.width,
+    this.height,
+  });
+
+  final String urlImage;
+  final double? width;
+  final double? height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      urlImage,
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return WidgetProgress();
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return Icon(Icons.error);
+      },
+    );
   }
 }
