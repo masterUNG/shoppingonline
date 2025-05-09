@@ -7,6 +7,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:shoppingonline/models/address_delivery_model.dart';
 
 import 'package:shoppingonline/models/order_model.dart';
+import 'package:shoppingonline/models/product_model.dart';
 import 'package:shoppingonline/states/widget_delivery_address.dart';
 import 'package:shoppingonline/states/widget_payment_method.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
@@ -53,8 +54,7 @@ class _DisplayOrderState extends State<DisplayOrder> {
                 future: AppService().findAddressDeliveryModelByDocId(
                     docId: widget.orderModel.docIdAddressDelivery),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return WidgetProgress();
                   } else {
                     if (snapshot.hasData) {
@@ -62,10 +62,8 @@ class _DisplayOrderState extends State<DisplayOrder> {
                           snapshot.data!;
                       return Row(
                         children: [
-
                           Icon(Icons.home_outlined),
-                SizedBox(width: 6),
-
+                          SizedBox(width: 6),
                           Text(
                             addressDeliveryModel.nameAddressDelivery,
                             style: AppConstant.h3Style(fontSize: 14),
@@ -83,24 +81,23 @@ class _DisplayOrderState extends State<DisplayOrder> {
             Text('Payment Method  :', style: AppConstant.h2Style(fontSize: 18)),
 
             Container(
-            decoration: AppConstant.bgGrey(),
-            margin: EdgeInsets.symmetric(vertical: 8),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              
-              children: [
-                Icon(Icons.payment_outlined),
-                SizedBox(width: 6),
-                Text(widget.orderModel.paymentMethod, style: AppConstant.h3Style(fontSize: 14)),
-              ],
-            )),
-            
+                decoration: AppConstant.bgGrey(),
+                margin: EdgeInsets.symmetric(vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Row(
+                  children: [
+                    Icon(Icons.payment_outlined),
+                    SizedBox(width: 6),
+                    Text(widget.orderModel.paymentMethod,
+                        style: AppConstant.h3Style(fontSize: 14)),
+                  ],
+                )),
+
             // WidgetPaymentMethod(),
 
             Text('Itme List : ', style: AppConstant.h2Style(fontSize: 18)),
+
             SizedBox(height: 16),
-
-
 
             ListView.builder(
                 physics: ScrollPhysics(),
@@ -108,137 +105,97 @@ class _DisplayOrderState extends State<DisplayOrder> {
                 // padding: EdgeInsets.symmetric(horizontal: 16),
                 itemCount: widget.orderModel.listCarts.length,
                 itemBuilder: (context, index) {
-
-
-                  return Container(
-                    height: 110,
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                        color: GFColors.LIGHT,
-                        borderRadius: BorderRadius.circular(15)),
-                    padding: EdgeInsets.all(16),
-                    margin: EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 80,
-                          height: 80,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(40),
-                              child: appController.productModels.isEmpty
-                                  ? SizedBox()
-                                  : Image.network(
-                                      appController
-                                          .productModels[index].urlImage,
+                  return FutureBuilder(
+                    future: AppService().findProductById(
+                        docIdProduct: widget.orderModel.listCarts[index]
+                            ['docIdProduct']),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        ProductModel productModel = snapshot.data!;
+                        return Container(
+                          height: 110,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                              color: GFColors.LIGHT,
+                              borderRadius: BorderRadius.circular(15)),
+                          padding: EdgeInsets.all(16),
+                          margin: EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 80,
+                                height: 80,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(40),
+                                    child: Image.network(
+                                      productModel.urlImage,
                                       fit: BoxFit.cover,
                                     )),
-                        ),
-                        SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: Get.width - 16 - 16 - 80 - 16 - 16 - 16,
-                              child: Text(
-                                  appController.productModels[index].name,
-                                  maxLines: 1,
-                                  style: AppConstant.h2Style(fontSize: 15)),
-                            ),
-                            SizedBox(
-                              width: Get.width - 16 - 16 - 80 - 16 - 16 - 16,
-                              child: Text(
-                                  appController.productModels[index].detail,
-                                  maxLines: 1,
-                                  style: AppConstant.h3Style()),
-                            ),
-                            SizedBox(
-                              width: Get.width - 16 - 16 - 80 - 16 - 16 - 16,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              ),
+                              SizedBox(width: 16),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                      '฿${appController.productModels[index].price}',
-                                      style: AppConstant.h2Style(fontSize: 15)),
-                                  Text(
-                                      'x${appController.cartModels[index].amount}',
-                                      style: AppConstant.h2Style(fontSize: 15)),
+                                  SizedBox(
+                                    width:
+                                        Get.width - 16 - 16 - 80 - 16 - 16 - 16,
+                                    child: Text(productModel.name,
+                                        maxLines: 1,
+                                        style:
+                                            AppConstant.h2Style(fontSize: 15)),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        Get.width - 16 - 16 - 80 - 16 - 16 - 16,
+                                    child: Text(productModel.detail,
+                                        maxLines: 1,
+                                        style: AppConstant.h3Style()),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        Get.width - 16 - 16 - 80 - 16 - 16 - 16,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('฿${productModel.price}',
+                                            style: AppConstant.h2Style(
+                                                fontSize: 15)),
+                                        Text(
+                                            'x${widget.orderModel.listCarts[index]['amount']}',
+                                            style: AppConstant.h2Style(
+                                                fontSize: 15)),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-
-
-
-
-
-                  
-                }),
-
-
-
-
-
-
-            SizedBox(height: 16),
-            totalPanal(),
-            SizedBox(height: 16),
-            WidgetButton(
-                text: 'Place Order',
-                onPressed: () async {
-                  List<Map<String, dynamic>> listCarts = [];
-                  for (var element in appController.cartModels) {
-                    listCarts.add(element.toMap());
-                  }
-
-                  OrderModel orderModel = OrderModel(
-                      uidOrder: appController.currentUserModels.last.uid,
-                      status: AppConstant.statusOrders[0],
-                      paymentMethod: AppConstant.paymentMethods[
-                          appController.indexChoosePaymentMethod.value],
-                      docIdAddressDelivery: appController
-                          .currentUserModels.last.docIdAddressDelivery!,
-                      deliveryCost: appController.deliveryCosts.last,
-                      listCarts: listCarts,
-                      cartsCost: appController.cartCosts.last,
-                      timestampPlaceOrder: Timestamp.fromDate(DateTime.now()));
-
-                  DocumentReference documentReference = FirebaseFirestore
-                      .instance
-                      .collection('order${AppConstant.keyApp}')
-                      .doc();
-
-                  await documentReference.set(orderModel.toMap()).whenComplete(
-                    () async {
-                      Map<String, dynamic> map = orderModel.toMap();
-                      map['docId'] = documentReference.id;
-
-                      await FirebaseFirestore.instance
-                          .collection('order${AppConstant.keyApp}')
-                          .doc(documentReference.id)
-                          .update(map)
-                          .whenComplete(
-                        () async {
-                          for (var element in appController.cartModels) {
-                            await FirebaseFirestore.instance
-                                .collection('user${AppConstant.keyApp}')
-                                .doc(appController.currentUserModels.last.uid)
-                                .collection('cart')
-                                .doc(element.docId)
-                                .delete();
-                          }
-
-                          Get.back(result: true);
-                        },
-                      );
+                            ],
+                          ),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
                     },
                   );
                 }),
+
             SizedBox(height: 16),
+
+            totalPanal(),
+            SizedBox(height: 16),
+
+
+            
+
+
+
+
+
+
+
+
+
           ],
         ));
   }
@@ -255,23 +212,23 @@ class _DisplayOrderState extends State<DisplayOrder> {
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('จำนวนรายการ', style: AppConstant.h3Style()),
-            Text(appController.cartModels.length.toString(),
+            Text(widget.orderModel.listCarts.length.toString(),
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('รวมราคา', style: AppConstant.h3Style()),
-            Text('฿${appController.cartCosts.last}',
+            Text('฿${widget.orderModel.cartsCost}',
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('ค่าขนส่ง', style: AppConstant.h3Style()),
-            Text('฿${appController.deliveryCosts.last}',
+            Text('฿${widget.orderModel.deliveryCost}',
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('รวมราคาทั้งหมด',
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
-            Text('฿${appController.cartCosts.last}',
+            Text('฿${widget.orderModel.cartsCost + widget.orderModel.deliveryCost}',
                 style: AppConstant.h3Style(
                     fontWeight: FontWeight.bold,
                     color: AppConstant.primaryColor)),
