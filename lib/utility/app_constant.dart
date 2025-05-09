@@ -10,9 +10,21 @@ class AppConstant {
   static Color light2Color = Color(0xffbed85d);
   static Color light3Color = Color(0xff82b055);
 
-  static List<String> statusOrders = <String>['Place', 'Prepared', 'Delivery', 'Completed', 'Cancel'];
+  static List<String> statusOrders = <String>[
+    'Place',
+    'Prepared',
+    'Delivery',
+    'Completed'
+  ];
 
-  static List<String> paymentMethods = <String>['Cash Delivery', 'Mobile Banking', 'Credit Card', 'PromptPay QR Code'];
+  static List<String> paymentMethods = <String>[
+    'Cash Delivery',
+    'Mobile Banking',
+    'Credit Card',
+    'PromptPay QR Code'
+  ];
+
+  
 
   static List<String> imageCats = <String>[
     'images/cat0.png',
