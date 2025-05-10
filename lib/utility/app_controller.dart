@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:shoppingonline/models/address_delivery_model.dart';
 import 'package:shoppingonline/models/cart_model.dart';
 import 'package:shoppingonline/models/category_model.dart';
+import 'package:shoppingonline/models/order_model.dart';
 import 'package:shoppingonline/models/product_model.dart';
 import 'package:shoppingonline/models/user_model.dart';
 
@@ -34,10 +35,20 @@ class AppController extends GetxController {
 
   RxList<ProductModel> productModels = <ProductModel>[].obs;
 
-  RxList<AddressDeliveryModel> addressDeliveryModels =
-      <AddressDeliveryModel>[].obs;
+  RxList<AddressDeliveryModel> addressDeliveryModels = <AddressDeliveryModel>[].obs;
 
   RxList<String?> chooseDocIdAddressDelicerys = <String?>[].obs;
 
   RxInt indexChoosePaymentMethod = 0.obs;
+
+  RxList<OrderModel> orderModels = <OrderModel>[].obs;
+
+
+
+
+
+
+
+
+
 }

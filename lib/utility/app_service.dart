@@ -28,17 +28,32 @@ class AppService {
         .get();
 
     for (var element in querySnapshots.docs) {
-
       OrderModel orderModel = OrderModel.fromMap(element.data());
 
       if (orderModel.uidOrder == appController.currentUserModels.last.uid) {
-        
         if (orderModel.status == status) {
           orderModels.add(orderModel);
         }
       }
     }
     return orderModels;
+  }
+
+  Future<void> readAllOrder() async {
+    if (appController.orderModels.isNotEmpty) {
+      appController.orderModels.clear();
+    }
+
+    var querySnapshots = await FirebaseFirestore.instance
+        .collection('order${AppConstant.keyApp}')
+        .orderBy('timestampPlaceOrder', descending: true)
+        .get();
+
+    for (var element in querySnapshots.docs) {
+      OrderModel orderModel = OrderModel.fromMap(element.data());
+
+      appController.orderModels.add(orderModel);
+    }
   }
 
   Future<AddressDeliveryModel?> findAddressDeliveryModelByDocId(
