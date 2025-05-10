@@ -27,10 +27,17 @@ class BodyOnGoing extends StatelessWidget {
           if (orderModels.isEmpty) {
             return SizedBox();
           } else {
+
+
+
+
             return ListView.builder(
                 itemCount: orderModels.length,
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                itemBuilder: (context, index) => Container(
+                itemBuilder: (context, index) => 
+                
+                
+                Container(
                     decoration: AppConstant.bgGrey(),
                     margin: EdgeInsets.only(bottom: 8),
                     padding: EdgeInsets.all(16),
@@ -41,7 +48,7 @@ class BodyOnGoing extends StatelessWidget {
                         WidgetTextRich(head: 'Status : ', body: orderModels[index].status),
                         SizedBox(height: 16),
                         StepsIndicator(
-                                  lineLength: (Get.width - 64) / 4,
+                                  lineLength: (800 - 64) / 4,
                                   nbSteps: 4,
                                   selectedStep: 0,
                                 ),
@@ -70,7 +77,14 @@ class BodyOnGoing extends StatelessWidget {
                          ],
                        ),
                       ],
-                    )));
+                    ))
+                    
+                    
+                    
+                    
+                    
+                    
+                    );
           }
         }
       },

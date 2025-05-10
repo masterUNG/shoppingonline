@@ -53,6 +53,8 @@ class AppService {
       OrderModel orderModel = OrderModel.fromMap(element.data());
 
       appController.orderModels.add(orderModel);
+
+      appController.displays.add(false);
     }
   }
 

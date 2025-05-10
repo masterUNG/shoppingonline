@@ -99,6 +99,11 @@ class _DisplayOrderState extends State<DisplayOrder> {
 
             SizedBox(height: 16),
 
+
+
+
+
+
             ListView.builder(
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
@@ -180,22 +185,16 @@ class _DisplayOrderState extends State<DisplayOrder> {
                   );
                 }),
 
+
+
+
+
+                
+
             SizedBox(height: 16),
 
             totalPanal(),
             SizedBox(height: 16),
-
-
-            
-
-
-
-
-
-
-
-
-
           ],
         ));
   }
@@ -228,7 +227,8 @@ class _DisplayOrderState extends State<DisplayOrder> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text('รวมราคาทั้งหมด',
                 style: AppConstant.h3Style(fontWeight: FontWeight.bold)),
-            Text('฿${widget.orderModel.cartsCost + widget.orderModel.deliveryCost}',
+            Text(
+                '฿${widget.orderModel.cartsCost + widget.orderModel.deliveryCost}',
                 style: AppConstant.h3Style(
                     fontWeight: FontWeight.bold,
                     color: AppConstant.primaryColor)),

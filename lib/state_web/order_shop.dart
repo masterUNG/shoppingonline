@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:shoppingonline/models/product_model.dart';
+import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
 import 'package:shoppingonline/utility/app_service.dart';
+import 'package:shoppingonline/widgets/widget_icon_button.dart';
+import 'package:shoppingonline/widgets/widget_image_network.dart';
 import 'package:shoppingonline/widgets/widget_text.dart';
+import 'package:shoppingonline/widgets/widget_text_rich.dart';
+import 'package:steps_indicator/steps_indicator.dart';
 
 class OrderShop extends StatefulWidget {
   const OrderShop({super.key});
@@ -30,9 +37,197 @@ class _OrderShopState extends State<OrderShop> {
               ? SizedBox()
               : ListView.builder(
                   itemCount: appController.orderModels.length,
-                  itemBuilder: (context, index) => WidgetText(
-                      text: appController
-                          .orderModels[index].docIdAddressDelivery),
+                  itemBuilder: (context, index) => Container(
+                      decoration: AppConstant.bgGrey(),
+                      margin: EdgeInsets.only(bottom: 8),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          WidgetTextRich(
+                              head: 'TimeOrder : ', body: 'dd mm yyy HH:mm'),
+                          WidgetTextRich(
+                              head: 'Status : ',
+                              body: appController.orderModels[index].status),
+                          SizedBox(height: 16),
+                          StepsIndicator(
+                            lineLength: 800 / 4,
+                            nbSteps: 4,
+                            selectedStep: 0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: AppConstant.statusOrders
+                                .map(
+                                  (e) => Text(
+                                    e,
+                                    style: AppConstant.h3Style(fontSize: 12),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WidgetTextRich(
+                                  head: 'Ref-',
+                                  body: appController.orderModels[index].docId!,
+                                  size: 12),
+                              Obx(() {
+                                return WidgetIconButton(
+                                    icon: appController.displays[index]
+                                        ? Icons.arrow_drop_up_outlined
+                                        : Icons.arrow_drop_down_outlined,
+                                    size: GFSize.LARGE,
+                                    onPressed: () {
+                                      appController.displays[index] =
+                                          !appController.displays[index];
+                                    });
+                              }),
+                            ],
+                          ),
+                          Obx(() => appController.displays[index]
+                              ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 16),
+                                    Text('Itme List : ',
+                                        style:
+                                            AppConstant.h2Style(fontSize: 18)),
+                                    SizedBox(height: 16),
+                                    ListView.builder(
+                                        physics: ScrollPhysics(),
+                                        shrinkWrap: true,
+                                        // padding: EdgeInsets.symmetric(horizontal: 16),
+                                        itemCount: appController
+                                            .orderModels[index]
+                                            .listCarts
+                                            .length,
+                                        itemBuilder: (context, index2) {
+                                          return FutureBuilder(
+                                            future: AppService()
+                                                .findProductById(
+                                                    docIdProduct: appController
+                                                            .orderModels[index]
+                                                            .listCarts[index2]
+                                                        ['docIdProduct']),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData) {
+                                                ProductModel productModel =
+                                                    snapshot.data!;
+
+
+                                                return Container(
+                                                  height: 110,
+                                                  width: Get.width,
+                                                  decoration: BoxDecoration(
+                                                      color: GFColors.LIGHT,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  padding: EdgeInsets.all(16),
+                                                  margin: EdgeInsets.only(
+                                                      bottom: 8),
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+
+                                                        width: 80,
+                                                        height: 80,
+                                                        child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40),
+                                                            child: WidgetImageNetwork(
+                                                                urlImage:
+                                                                    productModel
+                                                                        .urlImage)),
+                                                      ),
+                                                      SizedBox(width: 16),
+                                                      
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: 800 -
+                                                                16 -
+                                                                16 -
+                                                                80 -
+                                                                16 -
+                                                                16 -
+                                                                16,
+                                                            child: Text(
+                                                                productModel
+                                                                    .name,
+                                                                maxLines: 1,
+                                                                style: AppConstant
+                                                                    .h2Style(
+                                                                        fontSize:
+                                                                            15)),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 800 -
+                                                                16 -
+                                                                16 -
+                                                                80 -
+                                                                16 -
+                                                                16 -
+                                                                16,
+                                                            child: Text(
+                                                                productModel
+                                                                    .detail,
+                                                                maxLines: 1,
+                                                                style: AppConstant
+                                                                    .h3Style()),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 800 -
+                                                                16 -
+                                                                16 -
+                                                                80 -
+                                                                16 -
+                                                                16 -
+                                                                16,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                    '฿${productModel.price}',
+                                                                    style: AppConstant.h2Style(
+                                                                        fontSize:
+                                                                            15)),
+                                                                Text(
+                                                                    'x${appController.orderModels[index].listCarts[index2]['amount']}',
+                                                                    style: AppConstant.h2Style(
+                                                                        fontSize:
+                                                                            15)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              } else {
+                                                return SizedBox();
+                                              }
+                                            },
+                                          );
+                                        }),
+                                    SizedBox(height: 16),
+                                  ],
+                                )
+                              : SizedBox()),
+                        ],
+                      )),
                 )),
         ));
   }

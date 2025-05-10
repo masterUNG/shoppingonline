@@ -43,6 +43,8 @@ class AppController extends GetxController {
 
   RxList<OrderModel> orderModels = <OrderModel>[].obs;
 
+  RxList<bool> displays = <bool>[].obs;
+
 
 
 

@@ -15,7 +15,7 @@ class MainHomeWeb extends StatefulWidget {
 class _MainHomeWebState extends State<MainHomeWeb> {
   AppController appController = Get.put(AppController());
 
-  var titles = <String>['ออเตอร์', 'สินค้า', 'โปรไฟร์'];
+  var titles = <String>['ออเดอร์สั่งซื้อ', 'สินค้า', 'โปรไฟร์'];
 
   var iconDatas = <IconData>[Icons.money, Icons.food_bank, Icons.person];
 
