@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -8,10 +7,9 @@ import 'package:shoppingonline/models/address_delivery_model.dart';
 
 import 'package:shoppingonline/models/order_model.dart';
 import 'package:shoppingonline/models/product_model.dart';
-import 'package:shoppingonline/states/widget_delivery_address.dart';
-import 'package:shoppingonline/states/widget_payment_method.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
+import 'package:shoppingonline/utility/app_dialog.dart';
 import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
 import 'package:shoppingonline/widgets/widget_progress.dart';
@@ -99,11 +97,6 @@ class _DisplayOrderState extends State<DisplayOrder> {
 
             SizedBox(height: 16),
 
-
-
-
-
-
             ListView.builder(
                 physics: ScrollPhysics(),
                 shrinkWrap: true,
@@ -185,15 +178,48 @@ class _DisplayOrderState extends State<DisplayOrder> {
                   );
                 }),
 
-
-
-
-
-                
-
             SizedBox(height: 16),
 
             totalPanal(),
+            SizedBox(height: 16),
+             widget.orderModel.status == AppConstant.statusOrders.first ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                WidgetButton(
+                  text: 'Cancel Order',
+                  onPressed: () async {
+                    AppDialog().normalDialog(
+                        title:
+                            Text('Cancel Order', style: AppConstant.h2Style()),
+                        content: Text(
+                            'ต้องการเปลี่ยน Cancel Order โปรด Confirm',
+                            style: AppConstant.h3Style()),
+                        firstAction: WidgetButton(
+                          text: 'Confirm',
+                          textStyle: AppConstant.h3Style(color: GFColors.WHITE),
+                          onPressed: () async {
+                            Map<String, dynamic> map =
+                                widget.orderModel.toMap();
+                            map['status'] = 'cancel';
+
+                            await AppService()
+                                .editOrder(mapOrder: map)
+                                .whenComplete(
+                              () {
+                                // appController.orderModels[index] = OrderModel.fromMap(map);
+
+                                Get.back();
+                              },
+                            );
+                          },
+                        ));
+                  },
+                  bgColor: GFColors.DANGER,
+                  textStyle: AppConstant.h3Style(
+                      color: GFColors.WHITE, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ) :SizedBox(),
             SizedBox(height: 16),
           ],
         ));

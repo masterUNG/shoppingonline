@@ -316,6 +316,7 @@ class _OrderShopState extends State<OrderShop> {
                                             text: 'Plate -> Prepared',
                                             type: GFButtonType.outline,
                                             onPressed: () {
+                                              
                                               AppDialog().normalDialog(
                                                   title: Text('เปลี่ยน Status',
                                                       style: AppConstant
