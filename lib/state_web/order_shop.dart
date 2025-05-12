@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:shoppingonline/models/order_model.dart';
 import 'package:shoppingonline/models/product_model.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
+import 'package:shoppingonline/utility/app_dialog.dart';
 import 'package:shoppingonline/utility/app_service.dart';
+import 'package:shoppingonline/widgets/widget_button.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
 import 'package:shoppingonline/widgets/widget_image_network.dart';
 import 'package:shoppingonline/widgets/widget_text.dart';
@@ -45,7 +48,7 @@ class _OrderShopState extends State<OrderShop> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           WidgetTextRich(
-                              head: 'TimeOrder : ', body: 'dd mm yyy HH:mm'),
+                              head: 'TimeOrder : ', body: AppService().timeStameToString(timestamp: appController.orderModels[index].timestampPlaceOrder)),
                           WidgetTextRich(
                               head: 'Status : ',
                               body: appController.orderModels[index].status),
@@ -53,7 +56,7 @@ class _OrderShopState extends State<OrderShop> {
                           StepsIndicator(
                             lineLength: 800 / 4,
                             nbSteps: 4,
-                            selectedStep: 0,
+                            selectedStep: AppService().findSelectedStep(orderStatus: appController.orderModels[index].status),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -118,7 +121,6 @@ class _OrderShopState extends State<OrderShop> {
                                                 ProductModel productModel =
                                                     snapshot.data!;
 
-
                                                 return Container(
                                                   height: 110,
                                                   width: Get.width,
@@ -133,7 +135,6 @@ class _OrderShopState extends State<OrderShop> {
                                                   child: Row(
                                                     children: [
                                                       SizedBox(
-
                                                         width: 80,
                                                         height: 80,
                                                         child: ClipRRect(
@@ -147,7 +148,6 @@ class _OrderShopState extends State<OrderShop> {
                                                                         .urlImage)),
                                                       ),
                                                       SizedBox(width: 16),
-                                                      
                                                       Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -222,6 +222,124 @@ class _OrderShopState extends State<OrderShop> {
                                             },
                                           );
                                         }),
+                                    SizedBox(height: 16),
+                                    //panal
+                                    Container(
+                                      padding: EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                          color: GFColors.FOCUS,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 8),
+                                      width: Get.width - 16,
+                                      height: 130,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('จำนวนรายการ',
+                                                    style: AppConstant.h3Style(
+                                                        color: GFColors.LIGHT)),
+                                                Text(
+                                                    appController
+                                                        .orderModels[index]
+                                                        .listCarts
+                                                        .length
+                                                        .toString(),
+                                                    style: AppConstant.h3Style(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: GFColors.LIGHT)),
+                                              ]),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('รวมราคา',
+                                                    style: AppConstant.h3Style(
+                                                        color: GFColors.LIGHT)),
+                                                Text(
+                                                    '฿${appController.orderModels[index].cartsCost}',
+                                                    style: AppConstant.h3Style(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: GFColors.LIGHT)),
+                                              ]),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('ค่าขนส่ง',
+                                                    style: AppConstant.h3Style(
+                                                        color: GFColors.LIGHT)),
+                                                Text(
+                                                    '฿${appController.orderModels[index].deliveryCost}',
+                                                    style: AppConstant.h3Style(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: GFColors.LIGHT)),
+                                              ]),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('รวมราคาทั้งหมด',
+                                                    style: AppConstant.h3Style(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: GFColors.LIGHT)),
+                                                Text(
+                                                    '฿${appController.orderModels[index].cartsCost}',
+                                                    style: AppConstant.h3Style(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            GFColors.WARNING)),
+                                              ]),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 16),
+                                    appController.orderModels[index].status == AppConstant.statusOrders.first ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        WidgetButton(
+                                            text: 'Plate -> Prepared',
+                                            type: GFButtonType.outline,
+                                            onPressed: () {
+                                              AppDialog().normalDialog(
+                                                  title: Text('เปลี่ยน Status',
+                                                      style: AppConstant
+                                                          .h2Style()),
+                                                  content: Text(
+                                                      'ต้องการเปลี่ยน Status จาก Plate ไปเป็น Prepared โปรด Confirm',
+                                                      style: AppConstant
+                                                          .h3Style()), firstAction: WidgetButton(text: 'Confirm', textStyle: AppConstant.h3Style(color: GFColors.WHITE),
+                                                           onPressed: ()async {
+
+                                                            Map<String,dynamic> map = appController.orderModels[index].toMap();
+                                                            map['status'] = AppConstant.statusOrders[1];
+
+                                                            await AppService().editOrder(mapOrder: map).whenComplete(() {
+                                                              
+                                                              appController.orderModels[index] = OrderModel.fromMap(map);
+
+                                                              Get.back();
+                                                            },);
+                                                            
+                                                          },));
+                                            }),
+                                      ],
+                                    ) : SizedBox(),
                                     SizedBox(height: 16),
                                   ],
                                 )

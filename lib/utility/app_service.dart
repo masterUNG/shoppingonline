@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:shoppingonline/models/address_delivery_model.dart';
 import 'package:shoppingonline/models/cart_model.dart';
 import 'package:shoppingonline/models/category_model.dart';
@@ -19,19 +20,51 @@ import 'package:shoppingonline/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  Future<List<OrderModel>> readMyOrder({required String status}) async {
+  String timeStameToString({required Timestamp timestamp}){
+
+    DateFormat dateFormat = DateFormat('dd/MMM/yy HH:mm');
+    String string = dateFormat.format(timestamp.toDate());
+
+    return string;
+  }
+
+  int findSelectedStep({required String orderStatus}){
+
+    int selectedStep = 0;
+
+    if (orderStatus == AppConstant.statusOrders[1]) {
+      selectedStep = 1;
+    }
+    if (orderStatus == AppConstant.statusOrders[2]) {
+      selectedStep = 2;
+    }
+    if (orderStatus == AppConstant.statusOrders[3]) {
+      selectedStep = 3;
+    }
+
+
+    return selectedStep;
+  }
+
+  Future<void> editOrder({required Map<String,dynamic> mapOrder}) async {
+
+    await FirebaseFirestore.instance.collection('order${AppConstant.keyApp}').doc(mapOrder['docId']).update(mapOrder);
+
+  }
+
+  Future<List<OrderModel>> readMyOrder() async {
     var orderModels = <OrderModel>[];
 
     var querySnapshots = await FirebaseFirestore.instance
         .collection('order${AppConstant.keyApp}')
-        .orderBy('timestampPlaceOrder')
+        .orderBy('timestampPlaceOrder', descending: true)
         .get();
 
     for (var element in querySnapshots.docs) {
       OrderModel orderModel = OrderModel.fromMap(element.data());
 
       if (orderModel.uidOrder == appController.currentUserModels.last.uid) {
-        if (orderModel.status == status) {
+        if (orderModel.status != AppConstant.statusOrders[3]) {
           orderModels.add(orderModel);
         }
       }

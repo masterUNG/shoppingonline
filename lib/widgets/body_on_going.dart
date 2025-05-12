@@ -18,7 +18,7 @@ class BodyOnGoing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: AppService().readMyOrder(status: 'Place'),
+      future: AppService().readMyOrder(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return WidgetProgress();
@@ -44,13 +44,13 @@ class BodyOnGoing extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        WidgetTextRich(head: 'TimeOrder : ', body: 'dd mm yyy HH:mm'),
+                        WidgetTextRich(head: 'TimeOrder : ', body: AppService().timeStameToString(timestamp: orderModels[index].timestampPlaceOrder)),
                         WidgetTextRich(head: 'Status : ', body: orderModels[index].status),
                         SizedBox(height: 16),
                         StepsIndicator(
-                                  lineLength: (800 - 64) / 4,
+                                  lineLength: (Get.width - 64) / 4,
                                   nbSteps: 4,
-                                  selectedStep: 0,
+                                  selectedStep: AppService().findSelectedStep(orderStatus: orderModels[index].status),
                                 ),
                                 Row(
                                   mainAxisAlignment:
