@@ -1,0 +1,2 @@
+/Users/chaiwootphrombutr/WorkSpace/FlutterProj/shoppingonline/android/app/.cxx/RelWithDebInfo/6lom6j58/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/chaiwootphrombutr/WorkSpace/FlutterProj/shoppingonline/android/app/.cxx/RelWithDebInfo/6lom6j58/armeabi-v7a/CMakeFiles/rebuild_cache.dir
