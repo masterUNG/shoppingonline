@@ -20,16 +20,14 @@ import 'package:shoppingonline/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  String timeStameToString({required Timestamp timestamp}){
-
+  String timeStameToString({required Timestamp timestamp}) {
     DateFormat dateFormat = DateFormat('dd/MMM/yy HH:mm');
     String string = dateFormat.format(timestamp.toDate());
 
     return string;
   }
 
-  int findSelectedStep({required String orderStatus}){
-
+  int findSelectedStep({required String orderStatus}) {
     int selectedStep = 0;
 
     if (orderStatus == AppConstant.statusOrders[1]) {
@@ -42,14 +40,14 @@ class AppService {
       selectedStep = 3;
     }
 
-
     return selectedStep;
   }
 
-  Future<void> editOrder({required Map<String,dynamic> mapOrder}) async {
-
-    await FirebaseFirestore.instance.collection('order${AppConstant.keyApp}').doc(mapOrder['docId']).update(mapOrder);
-
+  Future<void> editOrder({required Map<String, dynamic> mapOrder}) async {
+    await FirebaseFirestore.instance
+        .collection('order${AppConstant.keyApp}')
+        .doc(mapOrder['docId'])
+        .update(mapOrder);
   }
 
   Future<List<OrderModel>> readMyOrder() async {
@@ -262,10 +260,36 @@ class AppService {
     return productModels;
   }
 
+  Future<List<ProductModel>> readAllProductByCategory(
+      {required String docIdCategory}) async {
+    var productModels = <ProductModel>[];
+
+    var result = await FirebaseFirestore.instance
+        .collection('product${AppConstant.keyApp}')
+        // .where('docIdCatigory', isEqualTo: docIdCategory)
+        .orderBy('timestamp', descending: true)
+        .get();
+
+    for (var element in result.docs) {
+      ProductModel productModel = ProductModel.fromMap(element.data());
+
+
+      if (productModel.docIdCatigory == docIdCategory) {
+  Map<String, dynamic> map = productModel.toMap();
+  map['docId'] = element.id;
+  
+  productModels.add(ProductModel.fromMap(map));
+}
+    }
+
+    return productModels;
+  }
+
   Future<List<CategoryModel>> readAllCategory() async {
     var categoryModels = <CategoryModel>[];
 
-    var result = await FirebaseFirestore.instance.collection('category').get();
+    var result = await FirebaseFirestore.instance.collection('category').orderBy('nameCategory')
+    .get();
     for (var element in result.docs) {
       CategoryModel categoryModel = CategoryModel.fromMap(element.data());
       Map<String, dynamic> map = categoryModel.toMap();
