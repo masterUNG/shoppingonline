@@ -1,5 +1,5 @@
 
-# แอพซือขายออนไลด์ ฟรี
+# แอพซื้อขายออนไลด์ ฟรี ๆๆๆ
 ### Workshop Project แบบจับมือทำ กับ มาสเตอร์ อึ่ง
 ## GitClone ไปใช้ได้อย่างฟรี ถ้าติดอะไร ? หรือ ต้องการเพิ่มฟีเจอร์ อะไร ? ทักถามมาสเตอร์ได้
 ### ติดต่อมาสเตอร์ อึ่ง เลย ที่
@@ -23,9 +23,7 @@ Mobile 0818595309
 
 [![temp-Image3-SP15-H.avif](https://i.postimg.cc/jqZLLWPF/temp-Image3-SP15-H.avif)](https://postimg.cc/nM9HWhd4)
 
-[![temp-Image-Gz5jpv.avif](https://i.postimg.cc/6QrQwTBz/temp-Image-Gz5jpv.avif)](https://postimg.cc/CZK0shBf)
-
-[![temp-Image-Gz5jpv.avif](https://i.postimg.cc/6QrQwTBz/temp-Image-Gz5jpv.avif)](https://postimg.cc/CZK0shBf)
+[![temp-Image-Gz5jpv.avif](https://i.postimg.cc/6QrQwTBz/temp-Image-Gz5jpv.avif)](https://postimg.cc/CZK0shBf) [![temp-Image-Gz5jpv.avif](https://i.postimg.cc/6QrQwTBz/temp-Image-Gz5jpv.avif)](https://postimg.cc/CZK0shBf)
 
 [![temp-Image1brvsw.avif](https://i.postimg.cc/DySy0x2S/temp-Image1brvsw.avif)](https://postimg.cc/CzVV6Hn0)
 
