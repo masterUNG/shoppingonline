@@ -44,72 +44,72 @@ class _ListPaymentMethodState extends State<ListPaymentMethod> {
                     onChanged: (value) {
                       appController.indexChoosePaymentMethod.value = value!;
                     }))),
-            Container(
-                decoration: AppConstant.bgGrey(),
-                margin: EdgeInsets.symmetric(vertical: 8),
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: Obx(() => RadioListTile(
-                    value: 1,
-                    groupValue: appController.indexChoosePaymentMethod.value,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Row(
-                      children: [
-                        WidgetImageAsset(
-                            pathImage: 'images/pay_bank.png',
-                            width: 36,
-                            height: 36),
-                        SizedBox(width: 8),
-                        Text('โอนผ่านแอปธนาคาร\n(Mobile Banking)'),
-                      ],
-                    ),
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    onChanged: (value) {
-                      appController.indexChoosePaymentMethod.value = value!;
-                    }))),
-            Container(
-                decoration: AppConstant.bgGrey(),
-                margin: EdgeInsets.symmetric(vertical: 8),
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: Obx(() => RadioListTile(
-                    value: 2,
-                    groupValue: appController.indexChoosePaymentMethod.value,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Row(
-                      children: [
-                        WidgetImageAsset(
-                            pathImage: 'images/pay_cardit_card.png',
-                            width: 36,
-                            height: 36),
-                        SizedBox(width: 8),
-                        Text('บัตรเครดิต\n(Credit Card)'),
-                      ],
-                    ),
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    onChanged: (value) {
-                      appController.indexChoosePaymentMethod.value = value!;
-                    }))),
-            Container(
-                decoration: AppConstant.bgGrey(),
-                margin: EdgeInsets.symmetric(vertical: 8),
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: Obx(() => RadioListTile(
-                    value: 3,
-                    groupValue: appController.indexChoosePaymentMethod.value,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Row(
-                      children: [
-                        WidgetImageAsset(
-                            pathImage: 'images/pay_money.png',
-                            width: 36,
-                            height: 36),
-                        SizedBox(width: 8),
-                        Text('พร้อมเพย์\n(PromptPay / QR Code)'),
-                      ],
-                    ),
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    onChanged: (value) {
-                      appController.indexChoosePaymentMethod.value = value!;
-                    }))),
+            // Container(
+            //     decoration: AppConstant.bgGrey(),
+            //     margin: EdgeInsets.symmetric(vertical: 8),
+            //     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            //     child: Obx(() => RadioListTile(
+            //         value: 1,
+            //         groupValue: appController.indexChoosePaymentMethod.value,
+            //         contentPadding: EdgeInsets.symmetric(horizontal: 0),
+            //         title: Row(
+            //           children: [
+            //             WidgetImageAsset(
+            //                 pathImage: 'images/pay_bank.png',
+            //                 width: 36,
+            //                 height: 36),
+            //             SizedBox(width: 8),
+            //             Text('โอนผ่านแอปธนาคาร\n(Mobile Banking)'),
+            //           ],
+            //         ),
+            //         controlAffinity: ListTileControlAffinity.trailing,
+            //         onChanged: (value) {
+            //           appController.indexChoosePaymentMethod.value = value!;
+            //         }))),
+            // Container(
+            //     decoration: AppConstant.bgGrey(),
+            //     margin: EdgeInsets.symmetric(vertical: 8),
+            //     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            //     child: Obx(() => RadioListTile(
+            //         value: 2,
+            //         groupValue: appController.indexChoosePaymentMethod.value,
+            //         contentPadding: EdgeInsets.symmetric(horizontal: 0),
+            //         title: Row(
+            //           children: [
+            //             WidgetImageAsset(
+            //                 pathImage: 'images/pay_cardit_card.png',
+            //                 width: 36,
+            //                 height: 36),
+            //             SizedBox(width: 8),
+            //             Text('บัตรเครดิต\n(Credit Card)'),
+            //           ],
+            //         ),
+            //         controlAffinity: ListTileControlAffinity.trailing,
+            //         onChanged: (value) {
+            //           appController.indexChoosePaymentMethod.value = value!;
+            //         }))),
+            // Container(
+            //     decoration: AppConstant.bgGrey(),
+            //     margin: EdgeInsets.symmetric(vertical: 8),
+            //     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            //     child: Obx(() => RadioListTile(
+            //         value: 3,
+            //         groupValue: appController.indexChoosePaymentMethod.value,
+            //         contentPadding: EdgeInsets.symmetric(horizontal: 0),
+            //         title: Row(
+            //           children: [
+            //             WidgetImageAsset(
+            //                 pathImage: 'images/pay_money.png',
+            //                 width: 36,
+            //                 height: 36),
+            //             SizedBox(width: 8),
+            //             Text('พร้อมเพย์\n(PromptPay / QR Code)'),
+            //           ],
+            //         ),
+            //         controlAffinity: ListTileControlAffinity.trailing,
+            //         onChanged: (value) {
+            //           appController.indexChoosePaymentMethod.value = value!;
+            //         }))),
           ],
         ));
   }
