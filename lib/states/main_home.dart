@@ -54,24 +54,21 @@ class _MainHomeState extends State<MainHome> {
           backgroundColor: GFColors.WHITE,
           appBar: PreferredSize(
               preferredSize: Size.fromHeight(84),
-              child: Container(
-                // decoration: BoxDecoration(color: AppConstant.light1Color),
-                child: Column(
-                  children: [
-                    SizedBox(height: 32),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        WidgetImageAsset(
-                            pathImage: 'images/logo.png', width: 72),
-                        Text(
-                          'Shopping Online',
-                          style: AppConstant.h2Style(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  SizedBox(height: 32),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      WidgetImageAsset(
+                          pathImage: 'images/logo.png', width: 72),
+                      Text(
+                        'Shopping Online',
+                        style: AppConstant.h2Style(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ],
               )),
           body: bodys[appController.indexBody.value],
           bottomNavigationBar: BottomNavigationBar(
