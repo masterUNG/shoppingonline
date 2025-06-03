@@ -10,7 +10,6 @@ import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
 import 'package:shoppingonline/widgets/widget_image_network.dart';
-import 'package:shoppingonline/widgets/widget_text.dart';
 import 'package:shoppingonline/widgets/widget_text_rich.dart';
 import 'package:steps_indicator/steps_indicator.dart';
 
