@@ -6,7 +6,7 @@ import 'package:shoppingonline/utility/app_constant.dart';
 
 class WidgetForm extends StatelessWidget {
   const WidgetForm({
-    Key? key,
+    super.key,
     this.label,
     this.hintText,
     this.keyboardType,
@@ -14,7 +14,7 @@ class WidgetForm extends StatelessWidget {
     this.validator,
     this.obscureText,
     this.suffixIcon,
-  }) : super(key: key);
+  });
 
   final String? label;
   final String? hintText;

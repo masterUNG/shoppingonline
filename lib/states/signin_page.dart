@@ -103,6 +103,7 @@ class _SignInPageState extends State<SignInPage> {
                                               email: emailController.text,
                                               password: passwordController.text).whenComplete(() {
                                                 
+                                                // ignore: use_build_context_synchronously
                                                 context.loaderOverlay.hide();
                                               },);
                                         }

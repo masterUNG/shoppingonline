@@ -12,10 +12,10 @@ import 'package:shoppingonline/widgets/widget_progress.dart';
 
 class ListAllProductByCatigory extends StatelessWidget {
   const ListAllProductByCatigory({
-    Key? key,
+    super.key,
     required this.categoryModel,
     required this.pathImage,
-  }) : super(key: key);
+  });
 
   final CategoryModel categoryModel;
   final String pathImage;

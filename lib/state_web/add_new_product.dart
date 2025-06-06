@@ -89,7 +89,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                           onPressed: () async {
                             String? urlImage =
                                 await AppService().findUrlImageByUpload(path: 'products');
-                            print('##6april ==> $urlImage');
+                            debugPrint('##6april ==> $urlImage');
 
                             appController.urlImages.add(urlImage!);
                           },
@@ -155,6 +155,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                                       hint: Text('โปรดเลือก กลุ่มของสินค้า'),
                                       items: categoryModels
                                           .map((e) => DropdownMenuItem(
+                                              // ignore: sort_child_properties_last
                                               child: Text(e.nameCategory),
                                               value: e))
                                           .toList(),

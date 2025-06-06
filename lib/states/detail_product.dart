@@ -14,9 +14,9 @@ import 'package:shoppingonline/widgets/widget_icon_button.dart';
 
 class DetailProduct extends StatefulWidget {
   const DetailProduct({
-    Key? key,
+    super.key,
     required this.productModel,
-  }) : super(key: key);
+  });
 
   final ProductModel productModel;
 
@@ -106,7 +106,7 @@ class _DetailProductState extends State<DetailProduct> {
                           docIdProduct: widget.productModel.docId!,
                           amount: appController.amount.value);
 
-                      print('## cartModel --> ${cartModel.toMap()}');
+                      debugPrint('## cartModel --> ${cartModel.toMap()}');
 
                       await FirebaseFirestore.instance
                           .collection('user${AppConstant.keyApp}')

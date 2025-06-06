@@ -5,7 +5,6 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
 import 'package:shoppingonline/utility/app_service.dart';
-import 'package:shoppingonline/widgets/widget_back_button.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
 import 'package:shoppingonline/widgets/widget_form.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
@@ -104,6 +103,7 @@ class _SignInWebPageState extends State<SignInWebPage> {
                                                       passwordController.text)
                                               .whenComplete(
                                             () {
+                                              // ignore: use_build_context_synchronously
                                               context.loaderOverlay.hide();
                                             },
                                           );

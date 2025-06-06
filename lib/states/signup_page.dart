@@ -158,8 +158,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         );
                                       },
                                     ).catchError((onError) {
-                                      print('## onError --> ${onError.code}');
-                                      print('## onError --> ${onError.message}');
+                                      debugPrint('## onError --> ${onError.code}');
+                                      debugPrint('## onError --> ${onError.message}');
             
                                       Get.snackbar('ไม่สามารถ สมัครได้',
                                           'เปลี่ยน Email ใหม่ Email นี้สมัครไปแล้ว',

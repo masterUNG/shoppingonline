@@ -11,8 +11,8 @@ import 'package:shoppingonline/widgets/widget_progress.dart';
 
 class ListAllProduct extends StatelessWidget {
   const ListAllProduct({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

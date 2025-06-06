@@ -54,7 +54,7 @@ class _BodyProfileState extends State<BodyProfile> {
                               String? urlAvatar = await AppService()
                                   .findUrlImageByUpload(path: 'profile');
                               if (urlAvatar != null) {
-                                print('##26april urlAvatar --> $urlAvatar');
+                                debugPrint('##26april urlAvatar --> $urlAvatar');
 
                                 Map<String, dynamic> map = appController
                                     .currentUserModels.last

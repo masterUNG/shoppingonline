@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
-import 'package:shoppingonline/widgets/widget_back_button.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
-import 'package:shoppingonline/widgets/widget_text.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart' as html;
 

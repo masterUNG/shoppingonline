@@ -7,9 +7,9 @@ import 'package:shoppingonline/widgets/widget_icon_button.dart';
 
 class WidgetBackButton extends StatelessWidget {
   const WidgetBackButton({
-    Key? key,
+    super.key,
     this.onPress,
-  }) : super(key: key);
+  });
 
   final Function()? onPress;
 

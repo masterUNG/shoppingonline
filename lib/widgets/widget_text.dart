@@ -5,10 +5,10 @@ import 'package:shoppingonline/utility/app_constant.dart';
 
 class WidgetText extends StatelessWidget {
   const WidgetText({
-    Key? key,
+    super.key,
     required this.text,
     this.textStyle,
-  }) : super(key: key);
+  });
 
   final String text;
   final TextStyle? textStyle;

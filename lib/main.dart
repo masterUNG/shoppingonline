@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shoppingonline/firebase_options.dart';
-import 'package:shoppingonline/state_web/main_home_web.dart';
 import 'package:shoppingonline/state_web/signin_web.dart';
 import 'package:shoppingonline/states/intro.dart';
 import 'package:shoppingonline/states/main_home.dart';
