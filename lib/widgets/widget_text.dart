@@ -15,7 +15,7 @@ class WidgetText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: textStyle ?? AppConstant.h3Style(),);
+    return Text(text, style: textStyle ?? AppConstant.h3Style(), );
   }
 
   
