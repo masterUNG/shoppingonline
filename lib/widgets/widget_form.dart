@@ -6,7 +6,7 @@ import 'package:shoppingonline/utility/app_constant.dart';
 
 class WidgetForm extends StatelessWidget {
   const WidgetForm({
-    super.key,
+    Key? key,
     this.label,
     this.hintText,
     this.keyboardType,
@@ -14,7 +14,8 @@ class WidgetForm extends StatelessWidget {
     this.validator,
     this.obscureText,
     this.suffixIcon,
-  });
+    this.onChanged,
+  }) : super(key: key);
 
   final String? label;
   final String? hintText;
@@ -23,10 +24,11 @@ class WidgetForm extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? obscureText;
   final Widget? suffixIcon;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextFormField(onChanged: onChanged,
         obscureText: obscureText ?? false,
         controller: controller,
         validator: validator,

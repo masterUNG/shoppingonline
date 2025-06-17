@@ -5,9 +5,13 @@ import 'package:shoppingonline/states/widget_delivery_address.dart';
 import 'package:shoppingonline/states/widget_payment_method.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
+import 'package:shoppingonline/utility/app_dialog.dart';
 import 'package:shoppingonline/utility/app_service.dart';
+import 'package:shoppingonline/widgets/widget_button.dart';
+import 'package:shoppingonline/widgets/widget_form.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
 import 'package:shoppingonline/widgets/widget_image_asset.dart';
+import 'package:shoppingonline/widgets/widget_text.dart';
 
 class BodyProfile extends StatefulWidget {
   const BodyProfile({
@@ -43,7 +47,7 @@ class _BodyProfileState extends State<BodyProfile> {
                           : GFAvatar(
                               backgroundImage: NetworkImage(
                                   appController.currentUserModels.last.avatar!),
-                                  backgroundColor: GFColors.LIGHT,
+                              backgroundColor: GFColors.LIGHT,
                               radius: 125)),
                       Positioned(
                         bottom: 0,
@@ -54,7 +58,8 @@ class _BodyProfileState extends State<BodyProfile> {
                               String? urlAvatar = await AppService()
                                   .findUrlImageByUpload(path: 'profile');
                               if (urlAvatar != null) {
-                                debugPrint('##26april urlAvatar --> $urlAvatar');
+                                debugPrint(
+                                    '##26april urlAvatar --> $urlAvatar');
 
                                 Map<String, dynamic> map = appController
                                     .currentUserModels.last
@@ -74,7 +79,41 @@ class _BodyProfileState extends State<BodyProfile> {
               children: [
                 Text(appController.currentUserModels.last.name,
                     style: AppConstant.h2Style()),
-                WidgetIconButton(icon: Icons.edit_square, onPressed: () {}),
+                WidgetIconButton(
+                    icon: Icons.edit_square,
+                    onPressed: () async {
+                      appController.display.value = false;
+
+                      TextEditingController textEditingController =
+                          TextEditingController();
+                      textEditingController.text =
+                          appController.currentUserModels.last.name;
+
+                      AppDialog().normalDialog(
+                          title: WidgetText(
+                              text: 'Edit Name',
+                              textStyle: AppConstant.h2Style()),
+                          content: WidgetForm(
+                              controller: textEditingController,
+                              onChanged: (p0) {
+                                appController.display.value = true;
+                              },
+                              label: 'Name :'),
+                          firstAction: Obx(() => appController.display.value ? WidgetButton(
+                                text: 'Save',
+                                type: GFButtonType.outline2x,
+                                onPressed: () async{
+
+                                  if (textEditingController.text.isNotEmpty) {
+                                    
+                                    Map<String,dynamic> map = appController.currentUserModels.last.toMap();
+                                    map['name'] = textEditingController.text;
+
+                                    await AppService().editProfile(mapProfile: map).whenComplete(() => Get.back());
+                                  }
+                                },
+                              ) : SizedBox()));
+                    }),
               ],
             ),
             Row(
