@@ -47,7 +47,10 @@ class _OrderShopState extends State<OrderShop> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           WidgetTextRich(
-                              head: 'TimeOrder : ', body: AppService().timeStameToString(timestamp: appController.orderModels[index].timestampPlaceOrder)),
+                              head: 'TimeOrder : ',
+                              body: AppService().timeStameToString(
+                                  timestamp: appController
+                                      .orderModels[index].timestampPlaceOrder)),
                           WidgetTextRich(
                               head: 'Status : ',
                               body: appController.orderModels[index].status),
@@ -55,7 +58,9 @@ class _OrderShopState extends State<OrderShop> {
                           StepsIndicator(
                             lineLength: 800 / 4,
                             nbSteps: 4,
-                            selectedStep: AppService().findSelectedStep(orderStatus: appController.orderModels[index].status),
+                            selectedStep: AppService().findSelectedStep(
+                                orderStatus:
+                                    appController.orderModels[index].status),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -308,38 +313,171 @@ class _OrderShopState extends State<OrderShop> {
                                       ),
                                     ),
                                     SizedBox(height: 16),
-                                    appController.orderModels[index].status == AppConstant.statusOrders.first ? Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        WidgetButton(
-                                            text: 'Plate -> Prepared',
-                                            type: GFButtonType.outline,
-                                            onPressed: () {
-                                              
-                                              AppDialog().normalDialog(
-                                                  title: Text('เปลี่ยน Status',
-                                                      style: AppConstant
-                                                          .h2Style()),
-                                                  content: Text(
-                                                      'ต้องการเปลี่ยน Status จาก Plate ไปเป็น Prepared โปรด Confirm',
-                                                      style: AppConstant
-                                                          .h3Style()), firstAction: WidgetButton(text: 'Confirm', textStyle: AppConstant.h3Style(color: GFColors.WHITE),
-                                                           onPressed: ()async {
+                                    appController.orderModels[index].status ==
+                                            AppConstant.statusOrders.first
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              WidgetButton(
+                                                  text: 'Plate -> Prepared',
+                                                  type: GFButtonType.outline,
+                                                  onPressed: () async {
+                                                    if (await AppDialog()
+                                                        .pinCodeDialog(
+                                                            context: context,
+                                                            pinCodetrue: AppConstant
+                                                                .pinCodeAdmin)) {
 
-                                                            Map<String,dynamic> map = appController.orderModels[index].toMap();
-                                                            map['status'] = AppConstant.statusOrders[1];
+                                                      AppDialog().normalDialog(
+                                                          title: Text(
+                                                              'เปลี่ยน Status',
+                                                              style: AppConstant
+                                                                  .h2Style()),
+                                                          content: Text(
+                                                              'ต้องการเปลี่ยน Status จาก Plate ไปเป็น Prepared โปรด Confirm',
+                                                              style: AppConstant
+                                                                  .h3Style()),
+                                                          firstAction:
+                                                              WidgetButton(
+                                                            text: 'Confirm',
+                                                            textStyle: AppConstant
+                                                                .h3Style(
+                                                                    color: GFColors
+                                                                        .WHITE),
+                                                            onPressed:
+                                                                () async {
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  map =
+                                                                  appController
+                                                                      .orderModels[
+                                                                          index]
+                                                                      .toMap();
+                                                              map['status'] =
+                                                                  AppConstant
+                                                                      .statusOrders[1];
 
-                                                            await AppService().editOrder(mapOrder: map).whenComplete(() {
-                                                              
-                                                              appController.orderModels[index] = OrderModel.fromMap(map);
+                                                              await AppService()
+                                                                  .editOrder(
+                                                                      mapOrder:
+                                                                          map)
+                                                                  .whenComplete(
+                                                                () {
+                                                                  appController
+                                                                              .orderModels[
+                                                                          index] =
+                                                                      OrderModel
+                                                                          .fromMap(
+                                                                              map);
 
-                                                              Get.back();
-                                                            },);
-                                                            
-                                                          },));
-                                            }),
-                                      ],
-                                    ) : SizedBox(),
+                                                                  Get.back();
+                                                                },
+                                                              );
+                                                            },
+                                                          ));
+
+
+
+
+
+                                                    } else {
+                                                      // แสดง snackbar เมื่อ PIN ผิด
+                                                      Get.snackbar(
+                                                        'PinCode Incorrect',
+                                                        'Please try again.',
+                                                        backgroundColor:
+                                                            GFColors.DANGER,
+                                                        colorText:
+                                                            GFColors.WHITE,
+                                                        snackPosition:
+                                                            SnackPosition
+                                                                .BOTTOM,
+                                                      );
+                                                    }
+                                                  }),
+                                              SizedBox(width: 8),
+                                              WidgetButton(
+                                                  text: 'Cancel',
+                                                  onPressed: () async {
+                                                    if (await AppDialog()
+                                                        .pinCodeDialog(
+                                                            context: context,
+                                                            pinCodetrue: AppConstant
+                                                                .pinCodeAdmin)) {
+                                                      //Pin True
+
+
+                                                      AppDialog().normalDialog(
+                                                          title: Text(
+                                                              'เปลี่ยน Status',
+                                                              style: AppConstant
+                                                                  .h2Style()),
+                                                          content: Text(
+                                                              'ต้องการเปลี่ยน Status จาก Plate ไปเป็น Cancel โปรด Confirm',
+                                                              style: AppConstant
+                                                                  .h3Style()),
+                                                          firstAction:
+                                                              WidgetButton(
+                                                            text: 'Confirm',
+                                                            textStyle: AppConstant
+                                                                .h3Style(
+                                                                    color: GFColors
+                                                                        .WHITE),
+                                                            onPressed:
+                                                                () async {
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  map =
+                                                                  appController
+                                                                      .orderModels[
+                                                                          index]
+                                                                      .toMap();
+                                                              map['status'] = 'Cancel';
+                                                                  
+
+                                                              await AppService()
+                                                                  .editOrder(
+                                                                      mapOrder:
+                                                                          map)
+                                                                  .whenComplete(
+                                                                () {
+                                                                  
+                                                                  appController.orderModels.removeAt(index);
+
+                                                                  Get.back();
+                                                                },
+                                                              );
+                                                            },
+                                                          ));
+
+
+
+
+
+                                                    } else {
+                                                      // แสดง snackbar เมื่อ PIN ผิด
+                                                      Get.snackbar(
+                                                        'PinCode Incorrect',
+                                                        'Please try again.',
+                                                        backgroundColor:
+                                                            GFColors.DANGER,
+                                                        colorText:
+                                                            GFColors.WHITE,
+                                                        snackPosition:
+                                                            SnackPosition
+                                                                .BOTTOM,
+                                                      );
+                                                    }
+                                                  },
+                                                  bgColor: GFColors.DANGER,
+                                                  textStyle:
+                                                      AppConstant.h3Style(
+                                                          color:
+                                                              GFColors.WHITE)),
+                                            ],
+                                          )
+                                        : SizedBox(),
                                     SizedBox(height: 16),
                                   ],
                                 )

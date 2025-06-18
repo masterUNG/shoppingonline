@@ -8,6 +8,7 @@ class UserModel {
   final String password;
   final String? avatar;
   final String? docIdAddressDelivery;
+  final num? pinCode;
 
 
 
@@ -20,6 +21,7 @@ class UserModel {
     required this.password,
     this.avatar,
     this.docIdAddressDelivery,
+    this.pinCode,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,6 +32,7 @@ class UserModel {
       'password': password,
       'avatar': avatar,
       'docIdAddressDelivery': docIdAddressDelivery,
+      'pinCode': pinCode,
     };
   }
 
@@ -39,8 +42,9 @@ class UserModel {
       name: (map['name'] ?? '') as String,
       email: (map['email'] ?? '') as String,
       password: (map['password'] ?? '') as String,
-      avatar: (map['avatar'] ?? '') as String,
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
       docIdAddressDelivery: map['docIdAddressDelivery'] != null ? map['docIdAddressDelivery'] as String : null,
+      pinCode: (map['pinCode'] ?? 1234) as num,
     );
   }
 

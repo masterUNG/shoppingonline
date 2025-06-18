@@ -10,6 +10,8 @@ class AppConstant {
   static Color light2Color = Color(0xffbed85d);
   static Color light3Color = Color(0xff82b055);
 
+  static String pinCodeAdmin = '2142'; 
+
   static List<String> statusOrders = <String>[
     'Place',
     'Prepared',

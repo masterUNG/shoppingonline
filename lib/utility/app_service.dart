@@ -83,9 +83,11 @@ class AppService {
     for (var element in querySnapshots.docs) {
       OrderModel orderModel = OrderModel.fromMap(element.data());
 
-      appController.orderModels.add(orderModel);
-
-      appController.displays.add(false);
+      if (orderModel.status != 'Cancel') {
+  appController.orderModels.add(orderModel);
+  
+  appController.displays.add(false);
+}
     }
   }
 
