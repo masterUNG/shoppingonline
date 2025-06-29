@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:shoppingonline/states/check_out.dart';
 import 'package:shoppingonline/utility/app_constant.dart';
 import 'package:shoppingonline/utility/app_controller.dart';
+import 'package:shoppingonline/utility/app_dialog.dart';
 import 'package:shoppingonline/utility/app_service.dart';
 import 'package:shoppingonline/widgets/widget_button.dart';
 import 'package:shoppingonline/widgets/widget_icon_button.dart';
+import 'package:shoppingonline/widgets/widget_text.dart';
 
 class BodyCart extends StatefulWidget {
   const BodyCart({
@@ -145,6 +148,59 @@ class _BodyCartState extends State<BodyCart> {
 
                                                           AppService()
                                                               .calculateSubtotal();
+                                                        } else {
+                                                          AppDialog()
+                                                              .normalDialog(
+                                                                  title: WidgetText(
+                                                                      text:
+                                                                          'Delete Item',
+                                                                      textStyle:
+                                                                          AppConstant
+                                                                              .h2Style()),
+                                                                  content:
+                                                                      WidgetText(
+                                                                          text:
+                                                                              'ต้องการลบ ${appController.productModels[index].name} ออกจาก ตระกล้า กรุณา Confirm'),
+                                                                  firstAction:
+                                                                      WidgetButton(
+                                                                    text:
+                                                                        'Confirm',
+                                                                    type: GFButtonType
+                                                                        .outline,
+                                                                    onPressed:
+                                                                        () async {
+                                                                      debugPrint(
+                                                                          '##29june docId --> ${appController.cartModels[index].docId}');
+
+                                                                      await FirebaseFirestore
+                                                                          .instance
+                                                                          .collection(
+                                                                              'user${AppConstant.keyApp}')
+                                                                          .doc(appController
+                                                                              .currentUserModels
+                                                                              .last
+                                                                              .uid)
+                                                                          .collection(
+                                                                              'cart')
+                                                                          .doc(appController
+                                                                              .cartModels[index]
+                                                                              .docId)
+                                                                          .delete()
+                                                                          .then(
+                                                                        (value) {
+                                                                          Get.back();
+
+                                                                          AppService()
+                                                                              .readAllCart()
+                                                                              .whenComplete(() {
+                                                                            AppService().calculateSubtotal();
+                                                                          });
+
+                                                                          // appController.cartModels.removeAt(index);
+                                                                        },
+                                                                      );
+                                                                    },
+                                                                  ));
                                                         }
                                                       },
                                                       size: GFSize.SMALL,
@@ -232,14 +288,6 @@ class _BodyCartState extends State<BodyCart> {
                         ],
                       ),
                     ),
-
-
-
-
-
-
-
-                    
                   ),
                   Positioned(
                     bottom: 0,
